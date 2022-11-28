@@ -101,27 +101,9 @@ class ProductsController extends AbstractController
             $page++;
         } while (count($products) > 0);
 
-        foreach ($all_products as $prod) {
-            $id[] = [
-                "id" => $prod->id,
-                "sku" => $prod->sku,
-                "name" => $prod->name,
-                /* "stock_quantity"=>$prod->stock_quantity,
-                "status"=>$prod->status,*/
+        
 
-            ];
-            $productsVariations = $this->productsVariation($prod->id);
-            foreach ($productsVariations as $prod1) {
-                $var1[] = [
-                    "id" => $prod1->id,
-                    "sku" => $prod1->sku,
-
-                ];
-            }
-            $id[] = $var1;
-        }
-
-        return new JsonResponse($id);
+        return new JsonResponse($all_products);
     }
 
 

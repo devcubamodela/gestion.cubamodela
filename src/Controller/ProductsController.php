@@ -87,11 +87,13 @@ class ProductsController extends AbstractController
             [
                 'wp_api' => true,
                 'version' => 'wc/v3',
+                'timeout' => 120,
 
             ]
         );
 
-        do {
+      
+      do {
             try {
                 $products = $woocommerce->get('products', array('per_page' => 10, 'page' => $page));
             } catch (HttpClientException $e) {
@@ -100,10 +102,50 @@ class ProductsController extends AbstractController
             $all_products = array_merge($all_products, $products);
             $page++;
         } while (count($products) > 0);
+      foreach($all_products as $prod){
+           $data[]= [
+                "id" => $prod->id,
+                "name" => $prod->name,
+                "sku" => $prod->sku,
+                
+               
+               // "brand" => $prod->brand,
+                /*"date" => $prod->date,
+                "slug" => $prod->slug,
+                "permalink" => $prod->ipermalinkd,
+                "date_created" => $prod->date_created,
+                "date_created_gmt" => $prod->date_created_gmt,
+                "date_modified" => $prod->date_modified,
 
+                "date_modified_gmt" => $prod->date_modified_gmt,
+                "type" => $prod->type,
+                "status" => $prod->status,
+                "featured" => $prod->featured,
+                "catalog_visibility" => $prod->catalog_visibility,
+                "description" => $prod->description,
+                "short_description" => $prod->short_description,
+                "price" => $prod->price,
+                "regular_price" => $prod->regular_price,
+                "date_on_sale_from" => $prod->date_on_sale_from,
+                "date_on_sale_from_gmt" => $prod->date_on_sale_from_gmt,
+                "date_on_sale_to" => $prod->date_on_sale_to,
+                "date_on_sale_to_gmt" => $prod->date_on_sale_to_gmt,
+                "on_sale" => $prod->on_sale,
+                "total_sales" => $prod->total_sales,
+                "stock_quantity" => $prod->stock_quantity,
+                "stock_status" => $prod->stock_status,
+
+                "backorders" => $prod->backorders,
+                "backorders_allowed" => $prod->backorders_allowed,
+                "sold_individuality" => $prod->sold_individuality,
+
+                "wigth" => $prod->wigth,*/
+                    ];
+        }
         
+       
 
-        return new JsonResponse($all_products);
+        return new JsonResponse($data);
     }
 
 

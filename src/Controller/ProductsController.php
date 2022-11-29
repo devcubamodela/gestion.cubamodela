@@ -92,31 +92,26 @@ class ProductsController extends AbstractController
             ]
         );
 
-      
-      do {
+
+        do {
             try {
-                $products = $woocommerce->get('products', array('per_page' => 10, 'page' => $page));
+                $products = $woocommerce->get('products', array('per_page' => 50, 'page' => $page));
             } catch (HttpClientException $e) {
                 die("Can't get products: $e");
             }
             $all_products = array_merge($all_products, $products);
             $page++;
         } while (count($products) > 0);
-      foreach($all_products as $prod){
-           $data[]= [
+        foreach ($all_products as $prod) {
+            $data[] = [
                 "id" => $prod->id,
                 "name" => $prod->name,
                 "sku" => $prod->sku,
-                
-               
-               // "brand" => $prod->brand,
-                /*"date" => $prod->date,
-                "slug" => $prod->slug,
-                "permalink" => $prod->ipermalinkd,
                 "date_created" => $prod->date_created,
+                "slug" => $prod->slug,
+                "date_modified_gmt" => $prod->date_modified_gmt,
                 "date_created_gmt" => $prod->date_created_gmt,
                 "date_modified" => $prod->date_modified,
-
                 "date_modified_gmt" => $prod->date_modified_gmt,
                 "type" => $prod->type,
                 "status" => $prod->status,
@@ -125,6 +120,7 @@ class ProductsController extends AbstractController
                 "description" => $prod->description,
                 "short_description" => $prod->short_description,
                 "price" => $prod->price,
+
                 "regular_price" => $prod->regular_price,
                 "date_on_sale_from" => $prod->date_on_sale_from,
                 "date_on_sale_from_gmt" => $prod->date_on_sale_from_gmt,
@@ -137,13 +133,27 @@ class ProductsController extends AbstractController
 
                 "backorders" => $prod->backorders,
                 "backorders_allowed" => $prod->backorders_allowed,
-                "sold_individuality" => $prod->sold_individuality,
 
-                "wigth" => $prod->wigth,*/
-                    ];
+
+
+
+                // "brand" => $prod->brand,
+                /*"date" => $prod->date,
+                "slug" => $prod->slug,
+                "permalink" => $prod->ipermalinkd,
+                "date_created" => $prod->date_created,
+                "date_created_gmt" => $prod->date_created_gmt,
+                "date_modified" => $prod->date_modified,
+                 "sold_individuality" => $prod->sold_individuality,
+                   "wigth" => $prod->wigth,
+
+           */
+
+
+            ];
         }
-        
-       
+
+
 
         return new JsonResponse($data);
     }

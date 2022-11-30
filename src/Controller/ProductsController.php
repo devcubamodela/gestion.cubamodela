@@ -9,6 +9,7 @@ use PhpParser\Node\Expr\ArrayItem;
 use App\Repository\ProductsRepository;
 use App\Controller\GlobalFuntionsController;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -70,6 +71,7 @@ class ProductsController extends AbstractController
 
         return $productos;
     }
+
 
 
     /**
@@ -157,6 +159,49 @@ class ProductsController extends AbstractController
 
         return new JsonResponse($data);
     }
+    /**
+     * @Route("/updateProduct", name= "UpdateProduct", methods="PUT")
+     */
+    public function UpdateProduct(Request $request): JsonResponse
+    {
+        require __DIR__ . '/../../vendor/autoload.php';
+        if (!empty($_GET['id'])) {
+            return new JsonResponse("Por Favor introduzca un Id");
+        }
+        $in=json_decode($request->getContent(), true);
+        $id = $in["id"];
+        $data = [
+            "stock_quantity" =>  $in["stock_quantity"],
+        ];
+        $woocommerce = new Client(
+            'https://testingtiendaonline.cubamodela.com/',
+            'ck_f5610087fad2e45d2450d04a3e5a4d508697a6e2',
+            'cs_1793afc267a0ac84e1d55cbc764b33bfadf209ea',
+            [
+                'wp_api' => true,
+                'version' => 'wc/v3',
+
+            ]
+        );
+
+
+        try {
+            $woocommerce->put('products/'.$id, json_decode($request->getContent(), true));
+            $product= $woocommerce->get('products/'.$id);
+            $id = [
+                "sku" => $product->sku,
+                "name" => $product->name,
+                "amount" => $product->stock_quantity,
+                "slug" => $product->slug,
+                "date" => $product->date_created,
+
+            ];
+        } catch (HttpClientException $e) {
+            die("Can't get products: $e");
+        }
+        return new JsonResponse($id);
+    }
+
 
 
     /**

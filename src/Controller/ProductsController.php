@@ -170,9 +170,7 @@ class ProductsController extends AbstractController
         }
         $in=json_decode($request->getContent(), true);
         $id = $in["id"];
-        $data = [
-            "stock_quantity" =>  $in["stock_quantity"],
-        ];
+        
         $woocommerce = new Client(
             'https://testingtiendaonline.cubamodela.com/',
             'ck_f5610087fad2e45d2450d04a3e5a4d508697a6e2',
@@ -199,7 +197,38 @@ class ProductsController extends AbstractController
         } catch (HttpClientException $e) {
             die("Can't get products: $e");
         }
-        return new JsonResponse($id);
+        return new JsonResponse("Producto actualizado");
+    }
+    /**
+     * @Route("/{id}", name= "Get a Product", methods="GET")
+     */
+    public function getProduct($id): JsonResponse
+    {
+        require __DIR__ . '/../../vendor/autoload.php';
+        
+      
+        $woocommerce = new Client(
+            'https://testingtiendaonline.cubamodela.com/',
+            'ck_f5610087fad2e45d2450d04a3e5a4d508697a6e2',
+            'cs_1793afc267a0ac84e1d55cbc764b33bfadf209ea',
+            [
+                'wp_api' => true,
+                'version' => 'wc/v3',
+
+            ]
+        );
+
+
+        try {
+            $woocommerce->get('products/'.$id);
+            $product= $woocommerce->get('products/'.$id);
+          if(!$product){
+            return new JsonResponse("No existen Productos con ese ID");
+          }
+        } catch (HttpClientException $e) {
+            die("Can't get products: $e");
+        }
+        return new JsonResponse($product);
     }
 
 

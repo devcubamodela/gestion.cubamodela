@@ -44,19 +44,63 @@ class ProductsRepository extends ServiceEntityRepository
         }
     }
 
-    public function ProductRegister($name,$sku,$amount ,$picture, $brand, $date  )
+    public function ProductRegister( 
+                $id,
+                $name,
+                $sku,
+                $date_created,
+                $slug,
+                $date_modified_gmt,
+                $date_created_gmt,
+                $date_modified,
+                $type,
+                $status,
+                $featured,
+                $catalog_visibility,
+                $description ,
+                $short_description,
+                $price,
+                $regular_price ,
+                $date_on_sale_from ,
+                $date_on_sale_from_gmt,
+                $date_on_sale_to,
+                $date_on_sale_to_gmt,
+                $on_sale,
+                $total_sales,
+                $stock_quantity,
+                $stock_status,
+                $backorders,
+                $backorders_allowed)
     {
         $newProduct = new Products();
         $newProduct
+            ->setIdProduct($id)
             ->setname($name)
             ->Setsku($sku)
-            
-            ->setamount($amount)
-            ->setpicture($picture)
-            ->setbrand($brand)
-            ->setDate($date);
-
-
+            ->setDateCreated($date_created)
+            ->setSlug($slug)
+            ->setDateModifiedGmt($date_modified_gmt)
+            ->setDateCreatedGmt($date_created_gmt)
+            ->setDateModified($date_modified)
+            ->setDateModifiedGmt($date_modified_gmt)
+            ->settype($type)
+            ->setStatus($status)
+            ->setFeatured($featured)
+            ->setCatalogVisibility($catalog_visibility)
+            ->setDescription($description)
+            ->setShortDescription($short_description)
+            ->setPrice($price)
+            ->setRegularPrice($regular_price)
+            ->setDateOnSaleFrom($date_on_sale_from)
+            ->setDateOnSaleFromGmt($date_on_sale_from_gmt)
+            ->setDateOnSaleTo($date_on_sale_to)
+            ->setDateOnSaleToGmt($date_on_sale_to_gmt)
+            ->setOnSale($on_sale)
+            ->setTotalSales($total_sales)
+            ->setStockQuantity($stock_quantity)
+            ->setStockStatus($stock_status)
+            ->setBackorders($backorders)
+            ->setBackordersAllowed($backorders_allowed);
         $this->entityManagerInterface->persist($newProduct);
         $this->entityManagerInterface->flush();
     }

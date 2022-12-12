@@ -281,13 +281,13 @@ class ProductsController extends AbstractController
         return new JsonResponse("Products Saved");
     }
 
-     /**
+    /**
      * @Route("/filter", name= "Filter Product", methods="GET")
      */
     public function filterProducts(Request $request): JsonResponse
     {
-        if (empty($_GET['idProduct']) && empty($_GET['name']) && empty($_GET['sku'])){
-            $products= $this->productsRepository->findAll();
+        if (empty($_GET['idProduct']) && empty($_GET['name']) && empty($_GET['sku'])) {
+            $products = $this->productsRepository->findAll();
             foreach ($products as $prod) {
                 $data[] = [
                     "id" => $prod->getIdProduct(),
@@ -306,7 +306,7 @@ class ProductsController extends AbstractController
                     "description" => $prod->getDescription(),
                     "short_description" => $prod->getShortDescription(),
                     "price" => $prod->getPrice(),
-    
+
                     "regular_price" => $prod->getRegularPrice(),
                     "date_on_sale_from" => $prod->getDateOnSaleFrom(),
                     "date_on_sale_from_gmt" => $prod->getDateOnSaleFromGmt(),
@@ -318,12 +318,12 @@ class ProductsController extends AbstractController
                     "stock_status" => $prod->getStockStatus(),
                     "backorders" => $prod->getBackorders(),
                     "backorders_allowed" => $prod->getBackordersAllowed(),
-    
+
                 ];
             }
             return new JsonResponse($data);
         }
-       
+
         $var = array();
 
 
@@ -337,14 +337,13 @@ class ProductsController extends AbstractController
             $var['sku'] = $request->query->get('sku');
         }
         if (count($var) == 0) {
-            $products= $this->productsRepository->findAll();
+            $products = $this->productsRepository->findAll();
             return new JsonResponse($products);
         }
         $products = $this->productsRepository->findBy($var);
         if ($products == null) {
-            return new JsonResponse(["Hola"], Response::HTTP_CREATED);
-        }
-        else{
+            return new JsonResponse(["No existen registros"], Response::HTTP_CREATED);
+        } else {
             foreach ($products as $prod) {
                 $data[] = [
                     "id" => $prod->getIdProduct(),
@@ -363,7 +362,7 @@ class ProductsController extends AbstractController
                     "description" => $prod->getDescription(),
                     "short_description" => $prod->getShortDescription(),
                     "price" => $prod->getPrice(),
-    
+
                     "regular_price" => $prod->getRegularPrice(),
                     "date_on_sale_from" => $prod->getDateOnSaleFrom(),
                     "date_on_sale_from_gmt" => $prod->getDateOnSaleFromGmt(),
@@ -375,11 +374,11 @@ class ProductsController extends AbstractController
                     "stock_status" => $prod->getStockStatus(),
                     "backorders" => $prod->getBackorders(),
                     "backorders_allowed" => $prod->getBackordersAllowed(),
-    
+
                 ];
             }
             return new JsonResponse($data);
-        } 
+        }
     }
 
     /**

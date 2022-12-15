@@ -382,6 +382,50 @@ class ProductsController extends AbstractController
     }
 
     /**
+     * @Route("/getall", name= "getAllProducts")
+     */
+    public function getAllProducts()
+    {
+
+        $products = $this->productsRepository->findAll();
+        foreach ($products as $prod) {
+            $data[] = [
+                "id" => $prod->getIdProduct(),
+                "name" => $prod->getName(),
+                "sku" => $prod->getSku(),
+                "date_created" => $prod->getDateCreated(),
+                "slug" => $prod->getSlug(),
+                "date_modified_gmt" => $prod->getDateModifiedGmt(),
+                "date_created_gmt" => $prod->getDateCreatedGmt(),
+                "date_modified" => $prod->getDateModified(),
+                "date_modified_gmt" => $prod->getDateModifiedGmt(),
+                "type" => $prod->getType(),
+                "status" => $prod->getStatus(),
+                "featured" => $prod->getFeatured(),
+                "catalog_visibility" => $prod->getCatalogVisibility(),
+                "description" => $prod->getDescription(),
+                "short_description" => $prod->getShortDescription(),
+                "price" => $prod->getPrice(),
+
+                "regular_price" => $prod->getRegularPrice(),
+                "date_on_sale_from" => $prod->getDateOnSaleFrom(),
+                "date_on_sale_from_gmt" => $prod->getDateOnSaleFromGmt(),
+                "date_on_sale_to" => $prod->getDateOnSaleTo(),
+                "date_on_sale_to_gmt" => $prod->getDateOnSaleToGmt(),
+                "on_sale" => $prod->getOnSale(),
+                "total_sales" => $prod->getTotalSales(),
+                "stock_quantity" => $prod->getStockQuantity(),
+                "stock_status" => $prod->getStockStatus(),
+                "backorders" => $prod->getBackorders(),
+                "backorders_allowed" => $prod->getBackordersAllowed(),
+
+            ];
+        }
+
+        return $this->render('products/index.html.twig', ['data' => $data]);
+    }
+
+    /**
      * @Route("/{id}", name= "Get a Product", methods="GET")
      */
     public function getProduct($id): JsonResponse

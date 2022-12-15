@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Hello ProductsController!
+{% endblock %}
+
+{% block body %}
+ 
+
+  <div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            #
+          </th>
+          <th>
+            Nombre
+          </th>
+          <th>
+            Sku
+          </th>
+          <th>
+            Slug
+          </th>
+          <th>
+            fecha de Creacion
+          </th>
+          <th>
+            Tipo
+          </th>
+          <th>
+            Estado
+          </th>
+          <th>
+            Precio
+          </th>
+          <th>
+            Total de ventas
+          </th>
+          <th>
+            Cantidad en almacen
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for products in data %}
+          <tr>
+           <td> {{ products.id }}<td>
+           <td> {{ products.name }}<td>
+           <td> {{ products.sku }}<td>
+           <td> {{ products.slug }}<td>
+           <td> {{ products.date_created }}<td>
+           <td> {{ products.type }}<td>
+           <td> {{ products.status }}<td>
+           <td> {{ products.price }}<td>
+           <td> {{ products.total_sales }}<td>
+           <td> {{ products.stock_quantity }}<td>
+          
+          </tr>
+         
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

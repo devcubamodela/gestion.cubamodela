@@ -5,60 +5,76 @@
 {% endblock %}
 
 {% block body %}
- 
-
-  <div>
-    <table class="table table-bordered">
+  <div class="table-responsive">
+    <table class="table">
       <thead>
         <tr>
-          <th>
+          <th scope="col">
             #
           </th>
-          <th>
+          <th scope="col">
             Nombre
           </th>
-          <th>
+          <th scope="col">
             Sku
           </th>
-          <th>
+          <th scope="col">
             Slug
           </th>
-          <th>
-            fecha de Creacion
+          <th scope="col">
+            Fecha de Creacion
           </th>
-          <th>
+          <th scope="col">
             Tipo
           </th>
-          <th>
+          <th scope="col">
             Estado
           </th>
-          <th>
-            Precio
+          <th scope="col">
+            Precio Regular
           </th>
-          <th>
-            Total de ventas
+          <th scope="col">
+            Total de Ventas
           </th>
-          <th>
-            Cantidad en almacen
+          <th scope="col">
+            Cantidad en Almacen
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="table-group-divider">
         {% for products in data %}
-          <tr>
-           <td> {{ products.id }}<td>
-           <td> {{ products.name }}<td>
-           <td> {{ products.sku }}<td>
-           <td> {{ products.slug }}<td>
-           <td> {{ products.date_created }}<td>
-           <td> {{ products.type }}<td>
-           <td> {{ products.status }}<td>
-           <td> {{ products.price }}<td>
-           <td> {{ products.total_sales }}<td>
-           <td> {{ products.stock_quantity }}<td>
-          
+          <tr scope="row">
+            <th scope="row">
+              {{ products.id }}
+            </th>
+            <th scope="row">
+              {{ products.name }}
+            </th>
+            <th scope="row">
+              {{ products.sku }}
+            </th>
+            <th scope="row">
+              {{ products.slug }}
+            </th>
+            <th scope="row">
+              {{ products.date_created }}
+            </th>
+            <th scope="row">
+              {{ products.type }}
+            </th>
+            <th scope="row">
+              {{ products.status }}
+            </th>
+            <th scope="row">
+              {{ products.regular_price }}
+            </th>
+            <th scope="row">
+              {{ products.total_sales }}
+            </th>
+            <th scope="row">
+              {{ products.stock_quantity }}
+            </th>
           </tr>
-         
         {% endfor %}
       </tbody>
     </table>

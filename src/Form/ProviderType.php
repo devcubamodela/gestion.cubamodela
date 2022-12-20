@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Provider;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,13 @@ class ProviderType extends AbstractType
         $builder
             ->add('name')
             ->add('code')
-            ->add('category')
+            ->add('category', ChoiceType::class, [
+                'choices'  => [
+                    'Comida' => 'Comida',
+                    'Accesorios' => 'Accesorios',
+                    'Ferretería' => 'Ferretería',
+                ],
+            ])
         ;
     }
 

@@ -358,4 +358,27 @@ class CustomersController extends AbstractController
             return new JsonResponse($data);
         }
     }
+
+    /**
+     * @Route("/allCustomers", name="Get all customers")
+     */
+    public function getAllCustomers(): Response
+    {        
+        $all_customers = $this->customerRepository->findAll();
+        return $this->render('customers/index.html.twig', ['data'=>$all_customers]);
+    }
+
+    /**
+     * @Route("/details/{id}", name="get_one")
+     */
+    public function getOneCustomer($id): Response
+    {   
+        try {        
+            $customer = $this->customerRepository->findOneBy(array('id'=>$id));
+            return $this->render('customers/details.html.twig', ['data'=>$customer]);
+        } catch (\Throwable $th) {
+            $mensaje = "No hay clientes para mostrar";
+            return $this->render('customers/details.html.twig', ['mensaje'=>$mensaje]);
+        }
+    }
 }

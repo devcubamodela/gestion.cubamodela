@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}List Customers{% endblock %}
+{% block title %}Details Customer{% endblock %}
 
 {% block body %}
 <style>
@@ -9,7 +9,8 @@
 </style>
 
 <div class="example-wrapper">
-    <table class="bordered">
+    {% if mensaje == "" %}
+     <table class="bordered">
         <thead>
             <tr>
                 <th>
@@ -99,111 +100,102 @@
                 <th>
                 Is Paying Customer
                 </th>
-                <th>
-                Options
-                </th>
             </tr>
         </thead>
         <tbody>
-            {% for customers in data %}
                 <tr>
                     <td>
                     1
                     </td>
                     <td>
-                    {{customers.dateCreated}}
+                    {{data.dateCreated}}
                     </td>
                     <td>
-                    {{customers.dateCreatedGmt}}
+                    {{data.dateCreatedGmt}}
                     </td>
                     <td>
-                    {{customers.email}}
+                    {{data.email}}
                     </td>
                     <td>
-                    {{customers.firstName}}
+                    {{data.firstName}}
                     </td>
                     <td>
-                    {{customers.lastName}}
+                    {{data.lastName}}
                     </td>
                     <td>
-                    {{customers.role}}
+                    {{data.role}}
                     </td>
                     <td>
-                    {{customers.username}}
+                    {{data.username}}
                     </td>
                     <td>
-                    {{customers.firstNameBiling}}
+                    {{data.firstNameBiling}}
                     </td>
                     <td>
-                    {{customers.lastNameBiling}}
+                    {{data.lastNameBiling}}
                     </td>
                     <td>
-                    {{customers.address1Biling}}
+                    {{data.address1Biling}}
                     </td>
                     <td>
-                    {{customers.companyBiling}}
+                    {{data.companyBiling}}
                     </td>
                     <td>
-                    {{customers.address2Biling}}
+                    {{data.address2Biling}}
                     </td>
                     <td>
-                    {{customers.cityBiling}}
+                    {{data.cityBiling}}
                     </td>
                     <td>
-                    {{customers.stateBiling}}
+                    {{data.stateBiling}}
                     </td>
                     <td>
-                    {{customers.postcodeBiling}}
+                    {{data.postcodeBiling}}
                     </td>
                     <td>
-                    {{customers.countryBiling}}
+                    {{data.countryBiling}}
                     </td>
                     <td>
-                    {{customers.emailBiling}}
+                    {{data.emailBiling}}
                     </td>
                     <td>
-                    {{customers.phoneBiling}}
+                    {{data.phoneBiling}}
                     </td>
                     <td>
-                    {{customers.firstNameShipping}}
+                    {{data.firstNameShipping}}
                     </td>
                     <td>
-                    {{customers.lastNameShipping}}
+                    {{data.lastNameShipping}}
                     </td>
                     <td>
-                    {{customers.companyShipping}}
+                    {{data.companyShipping}}
                     </td>
                     <td>
-                    {{customers.address1Shipping}}
+                    {{data.address1Shipping}}
                     </td>
                     <td>
-                    {{customers.address2Shipping}}
+                    {{data.address2Shipping}}
                     </td>
                     <td>
-                    {{customers.cityShipping}}
+                    {{data.cityShipping}}
                     </td>
                     <td>
-                    {{customers.stateShipping}}
+                    {{data.stateShipping}}
                     </td>
                     <td>
-                    {{customers.postcodeShipping}}
+                    {{data.postcodeShipping}}
                     </td>
                     <td>
-                    {{customers.countryShipping}}
+                    {{data.countryShipping}}
                     </td>
                     <td>
-                    {{customers.isPayingCustomer}}
-                    </td>
-                    <td>
-                    <a href={{ path('get_one',{id: customers.id}) }}>Ver</a>
+                    {{data.isPayingCustomer}}
                     </td>
                 </tr>
-            {% else %}
-                <tr>
-                    <td colspan="12">No hay datos</td>
-                </tr>
-            {% endfor %}
         </tbody>
     </table>
+    {% else %}
+        {{mensaje}}
+    {% endif %}
 </div>
 {% endblock %}

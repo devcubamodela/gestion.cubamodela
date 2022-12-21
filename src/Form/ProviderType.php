@@ -14,6 +14,10 @@ class ProviderType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('lastName')
+            ->add('email')
+            ->add('phone')
+            ->add('company')
             ->add('code')
             ->add('category', ChoiceType::class, [
                 'choices'  => [

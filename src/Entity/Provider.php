@@ -14,7 +14,7 @@ class Provider
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private $company;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $code;
@@ -24,6 +24,18 @@ class Provider
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $consecutive;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $name;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $lastName;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $email;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $phone;
 
     public function getId(): ?int
     {
@@ -74,6 +86,54 @@ class Provider
     public function setConsecutive(int $consecutive): self
     {
         $this->consecutive = $consecutive;
+
+        return $this;
+    }
+
+    public function getCompany(): ?string
+    {
+        return $this->company;
+    }
+
+    public function setCompany(string $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }

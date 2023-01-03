@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Hello ProductsController!
+{% endblock %}
+
+{% block body %}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">
+            #
+          </th>
+          <th scope="col">
+            Nombre
+          </th>
+          <th scope="col">
+            Sku
+          </th>
+          <th scope="col">
+            Slug
+          </th>
+          <th scope="col">
+            Fecha de Creacion
+          </th>
+          <th scope="col">
+            Tipo
+          </th>
+          <th scope="col">
+            Estado
+          </th>
+          <th scope="col">
+            Precio Regular
+          </th>
+          <th scope="col">
+            Total de Ventas
+          </th>
+          <th scope="col">
+            Cantidad en Almacen
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for products in data %}
+          <tr scope="row">
+            <th scope="row">
+              {{ products.id }}
+            </th>
+            <th scope="row">
+              {{ products.name }}
+            </th>
+            <th scope="row">
+              {{ products.sku }}
+            </th>
+            <th scope="row">
+              {{ products.slug }}
+            </th>
+            <th scope="row">
+              {{ products.date_created }}
+            </th>
+            <th scope="row">
+              {{ products.type }}
+            </th>
+            <th scope="row">
+              {{ products.status }}
+            </th>
+            <th scope="row">
+              {{ products.regular_price }}
+            </th>
+            <th scope="row">
+              {{ products.total_sales }}
+            </th>
+            <th scope="row">
+              {{ products.stock_quantity }}
+            </th>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GlobalFuntionsController!{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>SKU</th>
+            <th>Nombre</th>
+            <th>cantidad</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for link in productos %}
+            <tr>
+                <td>{{ link.id }}</td>
+                <td>{{ link.sku }}</td>
+                <td>{{ link.name }}</td>
+                <td>{{ link.stock_quantity }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+{% endblock %}

@@ -35,11 +35,13 @@ class ProductsController extends AbstractController
 
         $woocommerce = new Client(
             'https://testingtiendaonline.cubamodela.com/',
-            'ck_f5610087fad2e45d2450d04a3e5a4d508697a6e2',
-            'cs_1793afc267a0ac84e1d55cbc764b33bfadf209ea',
+            'ck_fc6c722bd737554ba6236d96458a2e1d306174e2',
+            'cs_a430cf1115c986e0436d5e8e8f43fc393a9770bb',
             [
                 'wp_api' => true,
                 'version' => 'wc/v3',
+                'timeout' => 120,
+
             ]
         );
 
@@ -47,7 +49,7 @@ class ProductsController extends AbstractController
 
         $productos = $woocommerce->get('products');
 
-        return $productos;
+        return $woocommerce;
     }
 
     public function productsVariation($id)
@@ -182,6 +184,105 @@ class ProductsController extends AbstractController
             die("Can't get products: $e");
         }
         return new JsonResponse("Producto actualizado");
+    }
+    /**
+     * @Route("/filter", name= "Filter Product", methods="GET")
+     */
+    public function filterProducts(Request $request): JsonResponse
+    {
+        if (empty($_GET['idProduct']) && empty($_GET['name']) && empty($_GET['sku'])) {
+            $products = $this->productsRepository->findAll();
+            foreach ($products as $prod) {
+                $data[] = [
+                    "id" => $prod->getIdProduct(),
+                    "name" => $prod->getName(),
+                    "sku" => $prod->getSku(),
+                    "date_created" => $prod->getDateCreated(),
+                    "slug" => $prod->getSlug(),
+                    "date_modified_gmt" => $prod->getDateModifiedGmt(),
+                    "date_created_gmt" => $prod->getDateCreatedGmt(),
+                    "date_modified" => $prod->getDateModified(),
+                    "date_modified_gmt" => $prod->getDateModifiedGmt(),
+                    "type" => $prod->getType(),
+                    "status" => $prod->getStatus(),
+                    "featured" => $prod->getFeatured(),
+                    "catalog_visibility" => $prod->getCatalogVisibility(),
+                    "description" => $prod->getDescription(),
+                    "short_description" => $prod->getShortDescription(),
+                    "price" => $prod->getPrice(),
+
+                    "regular_price" => $prod->getRegularPrice(),
+                    "date_on_sale_from" => $prod->getDateOnSaleFrom(),
+                    "date_on_sale_from_gmt" => $prod->getDateOnSaleFromGmt(),
+                    "date_on_sale_to" => $prod->getDateOnSaleTo(),
+                    "date_on_sale_to_gmt" => $prod->getDateOnSaleToGmt(),
+                    "on_sale" => $prod->getOnSale(),
+                    "total_sales" => $prod->getTotalSales(),
+                    "stock_quantity" => $prod->getStockQuantity(),
+                    "stock_status" => $prod->getStockStatus(),
+                    "backorders" => $prod->getBackorders(),
+                    "backorders_allowed" => $prod->getBackordersAllowed(),
+
+                ];
+            }
+            return new JsonResponse($data);
+        }
+
+        $var = array();
+
+
+        if (!empty($_GET['idProduct'])) {
+            $var['idProduct'] = $request->query->get('idProduct');
+        }
+        if (!empty($_GET['name'])) {
+            $var['name'] = $request->query->get('name');
+        }
+        if (!empty($_GET['sku'])) {
+            $var['sku'] = $request->query->get('sku');
+        }
+        if (count($var) == 0) {
+            $products = $this->productsRepository->findAll();
+            return new JsonResponse($products);
+        }
+        $products = $this->productsRepository->findBy($var);
+        if ($products == null) {
+            return new JsonResponse(["No existen registros"], Response::HTTP_CREATED);
+        } else {
+            foreach ($products as $prod) {
+                $data[] = [
+                    "id" => $prod->getIdProduct(),
+                    "name" => $prod->getName(),
+                    "sku" => $prod->getSku(),
+                    "date_created" => $prod->getDateCreated(),
+                    "slug" => $prod->getSlug(),
+                    "date_modified_gmt" => $prod->getDateModifiedGmt(),
+                    "date_created_gmt" => $prod->getDateCreatedGmt(),
+                    "date_modified" => $prod->getDateModified(),
+                    "date_modified_gmt" => $prod->getDateModifiedGmt(),
+                    "type" => $prod->getType(),
+                    "status" => $prod->getStatus(),
+                    "featured" => $prod->getFeatured(),
+                    "catalog_visibility" => $prod->getCatalogVisibility(),
+                    "description" => $prod->getDescription(),
+                    "short_description" => $prod->getShortDescription(),
+                    "price" => $prod->getPrice(),
+
+                    "regular_price" => $prod->getRegularPrice(),
+                    "date_on_sale_from" => $prod->getDateOnSaleFrom(),
+                    "date_on_sale_from_gmt" => $prod->getDateOnSaleFromGmt(),
+                    "date_on_sale_to" => $prod->getDateOnSaleTo(),
+                    "date_on_sale_to_gmt" => $prod->getDateOnSaleToGmt(),
+                    "on_sale" => $prod->getOnSale(),
+                    "total_sales" => $prod->getTotalSales(),
+                    "stock_quantity" => $prod->getStockQuantity(),
+                    "stock_status" => $prod->getStockStatus(),
+                    "backorders" => $prod->getBackorders(),
+                    "backorders_allowed" => $prod->getBackordersAllowed(),
+
+                ];
+            }
+            return new JsonResponse($data);
+        }
     }
 
     /**
@@ -333,106 +434,6 @@ class ProductsController extends AbstractController
             }
         }
         return new JsonResponse("Products Saved");
-    }
-
-    /**
-     * @Route("/filter", name= "Filter Product", methods="GET")
-     */
-    public function filterProducts(Request $request): JsonResponse
-    {
-        if (empty($_GET['idProduct']) && empty($_GET['name']) && empty($_GET['sku'])) {
-            $products = $this->productsRepository->findAll();
-            foreach ($products as $prod) {
-                $data[] = [
-                    "id" => $prod->getIdProduct(),
-                    "name" => $prod->getName(),
-                    "sku" => $prod->getSku(),
-                    "date_created" => $prod->getDateCreated(),
-                    "slug" => $prod->getSlug(),
-                    "date_modified_gmt" => $prod->getDateModifiedGmt(),
-                    "date_created_gmt" => $prod->getDateCreatedGmt(),
-                    "date_modified" => $prod->getDateModified(),
-                    "date_modified_gmt" => $prod->getDateModifiedGmt(),
-                    "type" => $prod->getType(),
-                    "status" => $prod->getStatus(),
-                    "featured" => $prod->getFeatured(),
-                    "catalog_visibility" => $prod->getCatalogVisibility(),
-                    "description" => $prod->getDescription(),
-                    "short_description" => $prod->getShortDescription(),
-                    "price" => $prod->getPrice(),
-
-                    "regular_price" => $prod->getRegularPrice(),
-                    "date_on_sale_from" => $prod->getDateOnSaleFrom(),
-                    "date_on_sale_from_gmt" => $prod->getDateOnSaleFromGmt(),
-                    "date_on_sale_to" => $prod->getDateOnSaleTo(),
-                    "date_on_sale_to_gmt" => $prod->getDateOnSaleToGmt(),
-                    "on_sale" => $prod->getOnSale(),
-                    "total_sales" => $prod->getTotalSales(),
-                    "stock_quantity" => $prod->getStockQuantity(),
-                    "stock_status" => $prod->getStockStatus(),
-                    "backorders" => $prod->getBackorders(),
-                    "backorders_allowed" => $prod->getBackordersAllowed(),
-
-                ];
-            }
-            return new JsonResponse($data);
-        }
-
-        $var = array();
-
-
-        if (!empty($_GET['idProduct'])) {
-            $var['idProduct'] = $request->query->get('idProduct');
-        }
-        if (!empty($_GET['name'])) {
-            $var['name'] = $request->query->get('name');
-        }
-        if (!empty($_GET['sku'])) {
-            $var['sku'] = $request->query->get('sku');
-        }
-        if (count($var) == 0) {
-            $products = $this->productsRepository->findAll();
-            return new JsonResponse($products);
-        }
-        $products = $this->productsRepository->findBy($var);
-        if ($products == null) {
-            return new JsonResponse(["No existen registros"], Response::HTTP_CREATED);
-        } else {
-            foreach ($products as $prod) {
-                $data[] = [
-                    "id" => $prod->getIdProduct(),
-                    "name" => $prod->getName(),
-                    "sku" => $prod->getSku(),
-                    "date_created" => $prod->getDateCreated(),
-                    "slug" => $prod->getSlug(),
-                    "date_modified_gmt" => $prod->getDateModifiedGmt(),
-                    "date_created_gmt" => $prod->getDateCreatedGmt(),
-                    "date_modified" => $prod->getDateModified(),
-                    "date_modified_gmt" => $prod->getDateModifiedGmt(),
-                    "type" => $prod->getType(),
-                    "status" => $prod->getStatus(),
-                    "featured" => $prod->getFeatured(),
-                    "catalog_visibility" => $prod->getCatalogVisibility(),
-                    "description" => $prod->getDescription(),
-                    "short_description" => $prod->getShortDescription(),
-                    "price" => $prod->getPrice(),
-
-                    "regular_price" => $prod->getRegularPrice(),
-                    "date_on_sale_from" => $prod->getDateOnSaleFrom(),
-                    "date_on_sale_from_gmt" => $prod->getDateOnSaleFromGmt(),
-                    "date_on_sale_to" => $prod->getDateOnSaleTo(),
-                    "date_on_sale_to_gmt" => $prod->getDateOnSaleToGmt(),
-                    "on_sale" => $prod->getOnSale(),
-                    "total_sales" => $prod->getTotalSales(),
-                    "stock_quantity" => $prod->getStockQuantity(),
-                    "stock_status" => $prod->getStockStatus(),
-                    "backorders" => $prod->getBackorders(),
-                    "backorders_allowed" => $prod->getBackordersAllowed(),
-
-                ];
-            }
-            return new JsonResponse($data);
-        }
     }
 
     /**

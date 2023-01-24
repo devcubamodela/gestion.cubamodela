@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Provider{% endblock %}
+
+{% block body %}
+    <h1>Provider</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ provider.id }}</td>
+            </tr>
+            <tr>
+                <th>Company</th>
+                <td>{{ provider.company }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ provider.code }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ provider.category }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ provider.name }}</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>{{ provider.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ provider.email }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ provider.phone }}</td>
+            </tr>
+            <tr>
+                <th>Consecutive</th>
+                <td>{{ provider.consecutive }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_provider_index') }}">back to list</a>
+
+    <a href="{{ path('app_provider_edit', {'id': provider.id}) }}">edit</a>
+
+    {{ include('provider/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Hello ProductsController!
+  Hello Orders List!
 {% endblock %}
 
 {% block body %}
@@ -13,67 +13,76 @@
             #
           </th>
           <th scope="col">
-            Nombre
+            Key de Orden
           </th>
           <th scope="col">
-            Sku
-          </th>
-          <th scope="col">
-            Slug
-          </th>
-          <th scope="col">
-            Fecha de Creacion
-          </th>
-          <th scope="col">
-            Tipo
+           Numero
           </th>
           <th scope="col">
             Estado
           </th>
           <th scope="col">
-            Precio Regular
+            Moneda
           </th>
           <th scope="col">
-            Total de Ventas
+            Valor
           </th>
           <th scope="col">
-            Cantidad en Almacen
+            Nombre
+          </th>
+          <th scope="col">
+            Apellido
+          </th>
+          <th scope="col">
+           Direccion
+          </th>
+          <th scope="col">
+            Correo
+          </th>
+          <th scope="col">
+            Telefono
           </th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        {% for products in data %}
+        {% for orders in orders %}
           <tr scope="row">
+          <th scope="row">
+              {{ orders.orderId }}
+            </th>
+          <th scope="row">
+              {{ orders.getOrderKey }}
+            </th>
+            
             <th scope="row">
-              {{ products.id }}
+              {{ orders.getNumber }}
             </th>
             <th scope="row">
-              {{ products.name }}
+              {{ orders.getStatus }}
             </th>
             <th scope="row">
-              {{ products.sku }}
+              {{ orders.getCurrency }}
             </th>
             <th scope="row">
-              {{ products.slug }}
+              {{ orders.getTotal }}
             </th>
             <th scope="row">
-              {{ products.date_created }}
+              {{ orders.getBillingFirstName }}
             </th>
             <th scope="row">
-              {{ products.type }}
+              {{ orders.getBillingLastName }}
             </th>
             <th scope="row">
-              {{ products.status }}
+              {{ orders.getBillingAddress1 }}
             </th>
             <th scope="row">
-              {{ products.regular_price }}
+              {{ orders.getBillingEmail }}
             </th>
             <th scope="row">
-              {{ products.total_sales }}
+              {{ orders.getBillingPhone }}
             </th>
-            <th scope="row">
-              {{ products.stock_quantity }}
-            </th>
+            
+           
           </tr>
         {% endfor %}
       </tbody>

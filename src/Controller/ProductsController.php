@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Controller\KeyController;
 
 
 /**
@@ -24,10 +25,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductsController extends AbstractController
 {
     private $productsRepository;
+    private $keyController;
 
-    public function __construct(ProductsRepository $productsRepository)
+    public function __construct(KeyController $keyController, ProductsRepository $productsRepository)
     {
         $this->productsRepository = $productsRepository;
+        $this->keyController = $keyController;
     }
 
     public function auth()
@@ -306,7 +309,7 @@ class ProductsController extends AbstractController
         );
         do {
             try {
-                $products = $woocommerce->get('products', array('per_page' => 50, 'page' => $page));
+                $products = $this->keyController->index()->get('products', array('per_page' => 50, 'page' => $page));
             } catch (HttpClientException $e) {
                 die("Can't get products: $e");
             }

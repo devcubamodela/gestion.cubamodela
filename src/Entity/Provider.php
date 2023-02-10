@@ -14,28 +14,22 @@ class Provider
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $company;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $code;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $category;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $consecutive;
-
-    #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $lastName;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $productid = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $email;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sku = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $phone;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $product_name = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $costo = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cant_vendidas = null;
 
     public function getId(): ?int
     {
@@ -53,87 +47,62 @@ class Provider
 
         return $this;
     }
-
-    public function getCode(): ?string
+    public function getProductid(): ?string
     {
-        return $this->code;
+        return $this->productid;
     }
 
-    public function setCode(string $code): self
+    public function setProductid(?string $productid): self
     {
-        $this->code = $code;
+        $this->productid = $productid;
 
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getSku(): ?string
     {
-        return $this->category;
+        return $this->sku;
     }
 
-    public function setCategory(string $category): self
+    public function setSku(?string $sku): self
     {
-        $this->category = $category;
+        $this->sku = $sku;
 
         return $this;
     }
 
-    public function getConsecutive(): ?int
+    public function getProductName(): ?string
     {
-        return $this->consecutive;
+        return $this->product_name;
     }
 
-    public function setConsecutive(int $consecutive): self
+    public function setProductName(?string $product_name): self
     {
-        $this->consecutive = $consecutive;
+        $this->product_name = $product_name;
 
         return $this;
     }
 
-    public function getCompany(): ?string
+    public function getCosto(): ?string
     {
-        return $this->company;
+        return $this->costo;
     }
 
-    public function setCompany(string $company): self
+    public function setCosto(?string $costo): self
     {
-        $this->company = $company;
+        $this->costo = $costo;
 
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getCantVendidas(): ?string
     {
-        return $this->lastName;
+        return $this->cant_vendidas;
     }
 
-    public function setLastName(string $lastName): self
+    public function setCantVendidas(?string $cant_vendidas): self
     {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): self
-    {
-        $this->phone = $phone;
+        $this->cant_vendidas = $cant_vendidas;
 
         return $this;
     }

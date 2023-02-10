@@ -27,4 +27,20 @@ class KeyController extends AbstractController
         );
         return $woocommerce;
     }
+    public function keyV2(){
+        $woocommerce = new Client(
+            'https://testingtiendaonline.cubamodela.com/',
+            'ck_9165c363f548a688c68e2c6fa3fd6ecddcf80c99',
+            'cs_fc6cf6161c04ef01684a8e4ba41200e94bdef29a',
+            [
+                'wp_api' => true,
+                'version' => 'wp/v2',
+                'timeout' => 120,
+    
+            ]
+        );
+
+      return $woocommerce;
+    }
+   
 }

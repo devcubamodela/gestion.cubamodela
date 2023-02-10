@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Provider;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @extends ServiceEntityRepository<Provider>
@@ -16,9 +17,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProviderRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $entityManagerInterface;
+    public function __construct(ManagerRegistry $registry,EntityManagerInterface $entityManagerInterface )
     {
         parent::__construct($registry, Provider::class);
+        $this->entityManagerInterface=$entityManagerInterface;
+       
     }
 
     public function add(Provider $entity, bool $flush = false): void
@@ -38,29 +42,48 @@ class ProviderRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function ProviderRegister(
+        $name,
+        $productid,
+        $sku,
+        $product_name,
+        $costo,
+        $cant_vendidas
+    ) {
+        $newProvider = new Provider();
+        $newProvider
+            ->setName($name)
+            ->setSku($sku)
+            ->setProductName($product_name)
+            ->setCosto($costo)
+            ->setCantVendidas($cant_vendidas)
+            ->setProductid($productid);
+        $this->entityManagerInterface->persist($newProvider);
+        $this->entityManagerInterface->flush();
+    }
 
-//    /**
-//     * @return Provider[] Returns an array of Provider objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Provider[] Returns an array of Provider objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Provider
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Provider
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

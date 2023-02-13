@@ -71,7 +71,7 @@ class Orders
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $customer_ip_address = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $customer_user_agent = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

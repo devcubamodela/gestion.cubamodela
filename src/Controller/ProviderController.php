@@ -32,72 +32,49 @@ class ProviderController extends AbstractController
     private $providerRepository;
     private $providerProductRepository;
 
-    public function __construct(KeyController $keyController, ProviderProductRepository $providerProductRepository,ProviderRepository $providerRepository,ProductsRepository $productsRepository)
+    public function __construct(KeyController $keyController, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
     {
         $this->productsRepository = $productsRepository;
         $this->keyController = $keyController;
-        $this->providerRepository= $providerRepository;
-        $this->providerProductRepository= $providerProductRepository;
+        $this->providerRepository = $providerRepository;
+        $this->providerProductRepository = $providerProductRepository;
     }
 
     #[Route('/getprovaiders', name: 'get_providers_from_woocomerce', methods: ['GET'])]
-    public function getProvaider(){
+    public function getProvaider()
+    {
         $page = 1;
         $provider = [];
-        $data_provider=[];
+        $data_provider = [];
         $all_provider = [];
-        $data_out[]=[];
-        $data_out_product[]=[];
-        
-        $provider= $this->keyController->keyV2()->get('allproviders');
-        foreach ($provider as $prov) {
-            $provider=$this->providerRepository->findOneBy(["name"=>$prov->meta_value]);
-            if($provider){
-                $this->providerRepository->remove($provider);
-                $name = $prov->meta_value;
-                $codigo="null";
-                $this->providerRepository->ProviderRegister($name,$codigo);
-                $datnombres_proveed = ["proveedor_nombre" => $prov->meta_value];
-                $data_provider = $this->keyController->keyV2()->post('providers', $datnombres_proveed, true);
-                foreach ($data_provider as $provid) {
-                    $prov_prod= $this->providerProductRepository->findOneBy(["nomb_provider"=>$prov->meta_value,"id_product"=>$provid->post_id]);
-                    if($prov_prod){
-                        $this->providerProductRepository->remove($prov_prod);
-                        $this->providerProductRepository->provid_product_register($name,$provid->post_id,$provid->cost);   
-                    }
-                    else{
-                        $this->providerProductRepository->provid_product_register($name,$provid->post_id,$provid->cost);
-                    }
-                
-            }
-            }
-            else{
-                $name = $prov->meta_value;
-                $codigo="null";
-                $this->providerRepository->ProviderRegister($name,$codigo);
-                $datnombres_proveed = ["proveedor_nombre" => $prov->meta_value];
-                $data_provider = $this->keyController->keyV2()->post('providers', $datnombres_proveed, true);
-                foreach ($data_provider as $provid) {
-                    $prov_prod= $this->providerProductRepository->findOneBy(["nomb_provider"=>$prov->meta_value,"id_product"=>$provid->post_id]);
-                    if($prov_prod){
-                        $this->providerProductRepository->remove($prov_prod);
-                        $this->providerProductRepository->provid_product_register($name,$provid->post_id,$provid->cost);   
-                    }
-                    else{
-                        $this->providerProductRepository->provid_product_register($name,$provid->post_id,$provid->cost);
-                    }   
-            }
-            }
-            
-                  
-            }
-        
-        
-        return new JsonResponse("salvado providers");
+        $data_out[] = [];
+        $data_out_product[] = [];
 
+        $provider = $this->keyController->keyV2()->get('allproviders');
+        foreach ($provider as $prov) {
+            $provider = $this->providerRepository->findOneBy(["name" => $prov->meta_value]);
+            if (!$provider) {
+                $name = $prov->meta_value;
+                $codigo = "null";
+                $this->providerRepository->ProviderRegister($name, $codigo);
+                $datnombres_proveed = ["proveedor_nombre" => $prov->meta_value];
+                $data_provider = $this->keyController->keyV2()->post('providers', $datnombres_proveed, true);
+                foreach ($data_provider as $provid) {
+                    $prov_prod = $this->providerProductRepository->findOneBy(["nomb_provider" => $prov->meta_value, "id_product" => $provid->post_id]);
+                    if (!$prov_prod) {
+                        $this->providerProductRepository->provid_product_register($name, $provid->post_id, $provid->cost);
+                    } else {
+                        $this->providerProductRepository->provid_product_register($name, $provid->post_id, $provid->cost);
+                    }
+                }
+            }
+        }
+
+
+        return new JsonResponse("salvado providers");
     }
 
-    
+
     // #[Route('/', name: 'app_provider_index', methods: ['GET'])]
     // public function index(ProviderRepository $providerRepository): Response
     // {
@@ -165,5 +142,5 @@ class ProviderController extends AbstractController
     // }
 
 
-    
+
 }

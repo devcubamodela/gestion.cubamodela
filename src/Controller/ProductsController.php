@@ -305,66 +305,8 @@ class ProductsController extends AbstractController
             }
             foreach ($products as $prod) {
                 $product = $this->productsRepository->findOneBy(["idProduct" => $prod->id]);
-                if ($product) {
-                    $this->productsRepository->remove($product);
-                    $id = $prod->id;
-                    $name = $prod->name;
-                    $sku = $prod->sku;
-                    $date_created = $prod->date_created;
-                    $slug = $prod->slug;
-                    $date_modified_gmt = $prod->date_modified_gmt;
-                    $date_created_gmt = $prod->date_created_gmt;
-                    $date_modified = $prod->date_modified;
-                    $date_modified_gmt = $prod->date_modified_gmt;
-                    $type = $prod->type;
-                    $status = $prod->status;
-                    $featured = $prod->featured;
-                    $catalog_visibility = $prod->catalog_visibility;
-                    $description = $prod->description;
-                    $short_description = $prod->short_description;
-                    $price = $prod->price;
-                    $regular_price = $prod->regular_price;
-                    $date_on_sale_from = $prod->date_on_sale_from;
-                    $date_on_sale_from_gmt = $prod->date_on_sale_from_gmt;
-                    $date_on_sale_to = $prod->date_on_sale_to;
-                    $date_on_sale_to_gmt = $prod->date_on_sale_to_gmt;
-                    $on_sale = $prod->on_sale;
-                    $total_sales = $prod->total_sales;
-                    $stock_quantity = $prod->stock_quantity;
-                    $stock_status = $prod->stock_status;
-                    $backorders = $prod->backorders;
-                    $backorders_allowed = $prod->backorders_allowed;
-    
-                    $this->productsRepository->ProductRegister(
-                        $id,
-                        $name,
-                        $sku,
-                        $date_created,
-                        $slug,
-                        $date_modified_gmt,
-                        $date_created_gmt,
-                        $date_modified,
-                        $type,
-                        $status,
-                        $featured,
-                        $catalog_visibility,
-                        $description,
-                        $short_description,
-                        $price,
-                        $regular_price,
-                        $date_on_sale_from,
-                        $date_on_sale_from_gmt,
-                        $date_on_sale_to,
-                        $date_on_sale_to_gmt,
-                        $on_sale,
-                        $total_sales,
-                        $stock_quantity,
-                        $stock_status,
-                        $backorders,
-                        $backorders_allowed
-                    );
-                }
                 if (!$product) {
+                    
                     $id = $prod->id;
                     $name = $prod->name;
                     $sku = $prod->sku;
@@ -427,6 +369,17 @@ class ProductsController extends AbstractController
         } while (count($products) > 0);
         
         return new JsonResponse("Products Saved");
+    }
+     /**
+     * @Route("/countall", name= "countAllProducts")
+     */
+    public function countAllProducts()
+    {
+
+        $products = sizeof($this->productsRepository->findAll());
+        
+
+        return new JsonResponse($products);
     }
 
     /**

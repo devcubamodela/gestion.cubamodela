@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\KeyController;
 use App\Repository\ProductsRepository;
+use App\Repository\ProviderProductRepository;
 use App\Entity\Products;
 use PhpParser\Node\Expr\Empty_;
 use Automattic\WooCommerce\Client;
@@ -29,12 +30,14 @@ class ProviderController extends AbstractController
     private $productsRepository;
     private $keyController;
     private $providerRepository;
+    private $providerProductRepository;
 
-    public function __construct(KeyController $keyController, ProviderRepository $providerRepository,ProductsRepository $productsRepository)
+    public function __construct(KeyController $keyController, ProviderProductRepository $providerProductRepository,ProviderRepository $providerRepository,ProductsRepository $productsRepository)
     {
         $this->productsRepository = $productsRepository;
         $this->keyController = $keyController;
         $this->providerRepository= $providerRepository;
+        $this->providerProductRepository= $providerProductRepository;
     }
 
     #[Route('/getprovaiders', name: 'get_providers_from_woocomerce', methods: ['GET'])]
@@ -46,38 +49,55 @@ class ProviderController extends AbstractController
         $data_out[]=[];
         $data_out_product[]=[];
         
-
-        $woocommerce = new Client(
-            'https://testingtiendaonline.cubamodela.com/',
-            'ck_9165c363f548a688c68e2c6fa3fd6ecddcf80c99',
-            'cs_fc6cf6161c04ef01684a8e4ba41200e94bdef29a',
-            [
-                'wp_api' => true,
-                'version' => 'wp/v2',
-                'timeout' => 120,
-
-            ]
-        );
         $provider= $this->keyController->keyV2()->get('allproviders');
         foreach ($provider as $prov) {
-            
-            $data= [ "proveedor_nombre"=>$prov->meta_value];
-               
-            
-            $data_provider= $this->keyController->keyV2()->post('providers',$data, true);
-            foreach($data_provider as $provid){
-                $product = $this->productsRepository->findOneBy(["idProduct" => $provid->post_id]);
-                if($product){
-                   $this->providerRepository->ProviderRegister($prov->meta_value, $provid->post_id,$product->getSku(),$product->getName(),$provid->cost,$product->getTotalSales());
-                }
-                
+            $provider=$this->providerRepository->findOneBy(["name"=>$prov->meta_value]);
+            if($provider){
+                $this->providerRepository->remove($provider);
+                $name = $prov->meta_value;
+                $codigo="null";
+                $this->providerRepository->ProviderRegister($name,$codigo);
+                $datnombres_proveed = ["proveedor_nombre" => $prov->meta_value];
+                $data_provider = $this->keyController->keyV2()->post('providers', $datnombres_proveed, true);
+                foreach ($data_provider as $provid) {
+                    $prov_prod= $this->providerProductRepository->findOneBy(["nomb_provider"=>$prov->meta_value,"id_product"=>$provid->post_id]);
+                    if($prov_prod){
+                        $this->providerProductRepository->remove($prov_prod);
+                        $this->providerProductRepository->provid_product_register($name,$provid->post_id,$provid->cost);   
+                    }
+                    else{
+                        $this->providerProductRepository->provid_product_register($name,$provid->post_id,$provid->cost);
+                    }
                 
             }
-        }
-        $var= sizeof($data_out_product);
-        return new JsonResponse($data_out_product);
+            }
+            else{
+                $name = $prov->meta_value;
+                $codigo="null";
+                $this->providerRepository->ProviderRegister($name,$codigo);
+                $datnombres_proveed = ["proveedor_nombre" => $prov->meta_value];
+                $data_provider = $this->keyController->keyV2()->post('providers', $datnombres_proveed, true);
+                foreach ($data_provider as $provid) {
+                    $prov_prod= $this->providerProductRepository->findOneBy(["nomb_provider"=>$prov->meta_value,"id_product"=>$provid->post_id]);
+                    if($prov_prod){
+                        $this->providerProductRepository->remove($prov_prod);
+                        $this->providerProductRepository->provid_product_register($name,$provid->post_id,$provid->cost);   
+                    }
+                    else{
+                        $this->providerProductRepository->provid_product_register($name,$provid->post_id,$provid->cost);
+                    }   
+            }
+            }
+            
+                  
+            }
+        
+        
+        return new JsonResponse("salvado providers");
 
     }
+
+    
     // #[Route('/', name: 'app_provider_index', methods: ['GET'])]
     // public function index(ProviderRepository $providerRepository): Response
     // {

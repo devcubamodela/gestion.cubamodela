@@ -17,19 +17,7 @@ class Provider
     private $name;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $productid = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $sku = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $product_name = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $costo = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $cant_vendidas = null;
+    private ?string $codigo = null;
 
     public function getId(): ?int
     {
@@ -47,63 +35,17 @@ class Provider
 
         return $this;
     }
-    public function getProductid(): ?string
+
+    public function getCodigo(): ?string
     {
-        return $this->productid;
+        return $this->codigo;
     }
 
-    public function setProductid(?string $productid): self
+    public function setCodigo(?string $codigo): self
     {
-        $this->productid = $productid;
+        $this->codigo = $codigo;
 
         return $this;
     }
-
-    public function getSku(): ?string
-    {
-        return $this->sku;
-    }
-
-    public function setSku(?string $sku): self
-    {
-        $this->sku = $sku;
-
-        return $this;
-    }
-
-    public function getProductName(): ?string
-    {
-        return $this->product_name;
-    }
-
-    public function setProductName(?string $product_name): self
-    {
-        $this->product_name = $product_name;
-
-        return $this;
-    }
-
-    public function getCosto(): ?string
-    {
-        return $this->costo;
-    }
-
-    public function setCosto(?string $costo): self
-    {
-        $this->costo = $costo;
-
-        return $this;
-    }
-
-    public function getCantVendidas(): ?string
-    {
-        return $this->cant_vendidas;
-    }
-
-    public function setCantVendidas(?string $cant_vendidas): self
-    {
-        $this->cant_vendidas = $cant_vendidas;
-
-        return $this;
-    }
+  
 }

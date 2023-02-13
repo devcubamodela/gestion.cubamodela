@@ -101,6 +101,7 @@ class OrdersController extends AbstractController
                         $payment_method = $ord->payment_method;
                         $payment_method_title = $ord->payment_method_title;
                         $date_paid = $ord->date_paid;
+                        $productos=$ord->line_items;
                         
                         
             
@@ -135,7 +136,8 @@ class OrdersController extends AbstractController
                         $shipping_address_1,
                         $payment_method,
                         $payment_method_title,
-                        $date_paid);
+                        $date_paid,
+                        $productos);
                     }
                     if (!$order) {
                         $orderId = $ord->id;
@@ -170,6 +172,7 @@ class OrdersController extends AbstractController
                         $payment_method = $ord->payment_method;
                         $payment_method_title = $ord->payment_method_title;
                         $date_paid = $ord->date_paid;
+                        $productos=$ord->line_items;
             
                         $this->ordersRepository->RegisterOrders($orderId,
                         $parent_id,
@@ -202,7 +205,8 @@ class OrdersController extends AbstractController
                         $shipping_address_1,
                         $payment_method,
                         $payment_method_title,
-                        $date_paid);
+                        $date_paid,
+                        $productos);
                     }
                 }
             } catch (HttpClientException $e) {
@@ -212,7 +216,7 @@ class OrdersController extends AbstractController
             $page++;
         } while (count($orders) > 0);
         
-    return new JsonResponse("Order Saved");
+    return new JsonResponse(sizeof($all_orders));
 }
     
     

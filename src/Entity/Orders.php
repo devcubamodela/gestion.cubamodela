@@ -110,6 +110,9 @@ class Orders
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $date_paid = null;
 
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private array $productos = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -495,6 +498,18 @@ class Orders
     public function setDatePaid(?string $date_paid): self
     {
         $this->date_paid = $date_paid;
+
+        return $this;
+    }
+
+    public function getProductos(): array
+    {
+        return $this->productos;
+    }
+
+    public function setProductos(?array $productos): self
+    {
+        $this->productos = $productos;
 
         return $this;
     }

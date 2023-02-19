@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Controller\KeyController;
+use App\Repository\ProductVariationRepository;
 
 
 /**
@@ -26,11 +27,13 @@ class ProductsController extends AbstractController
 {
     private $productsRepository;
     private $keyController;
+    private $productVariationsRepository;
 
-    public function __construct(KeyController $keyController, ProductsRepository $productsRepository)
+    public function __construct(KeyController $keyController,ProductVariationRepository $productVariationsRepository, ProductsRepository $productsRepository)
     {
         $this->productsRepository = $productsRepository;
         $this->keyController = $keyController;
+        $this->productVariationsRepository = $productVariationsRepository;
     }
 
     public function auth()
@@ -43,7 +46,7 @@ class ProductsController extends AbstractController
             [
                 'wp_api' => true,
                 'version' => 'wc/v3',
-                'timeout' => 120,
+                'timeout' => 240,
 
             ]
         );
@@ -370,6 +373,52 @@ class ProductsController extends AbstractController
         
         return new JsonResponse("Products Saved");
     }
+     /**
+     * @Route("/saveVariation", name= "products_variation", methods="GET")
+     */
+    public function push_products_variation(): JsonResponse
+    {
+        
+        $variation = [];
+        $all_variations = [];
+        $all_products=$this->productsRepository->findAll();
+        foreach($all_products as $producto){
+            try{
+                $this->saveVariation($producto->getIdProduct());
+            }
+            catch (HttpClientException $e) {
+                die("Can't get products: $e");
+            }
+            
+        }
+        
+        return new JsonResponse("Products Fuck");
+    }
+    public function saveVariation($idProducto){
+        $page = 1;
+        $variation = [];
+        $all_variations = [];
+        $variations[]=[];
+        do {
+            try {
+                $variations= $this->keyController->index()->get('products/'.$idProducto.'/variations', array('per_page' => 50, 'page' => $page));
+            } catch (HttpClientException $e) {
+                die("Can't get products: $e");
+            }
+            foreach ($variations as $var) {
+                $vari = $this->productVariationsRepository->findOneBy(["id_variation"=>$var->id, "id_product"=>$idProducto]);
+                if (!$vari) {
+                          
+                    $this->productVariationsRepository->productVariationRegister($var->id,$var->date_created,
+                                                                                 $var->description,$var->sku,$var->price,
+                                                                                 $var->regular_price,$var->sale_price,$var->status
+                                                                                 ,$var->stock_status,$idProducto);
+                }
+            }
+            $page++;
+        } while (count($variations) > 0);
+    }
+    
      /**
      * @Route("/countall", name= "countAllProducts")
      */

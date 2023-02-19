@@ -18,9 +18,11 @@ use PhpParser\Node\Expr\Empty_;
 use Automattic\WooCommerce\Client;
 use PhpParser\Node\Expr\ArrayItem;
 use App\Controller\GlobalFuntionsController;
+use App\Entity\Orders;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
+use App\Repository\OrdersRepository;
 
 
 #[Route('/provider')]
@@ -31,14 +33,45 @@ class ProviderController extends AbstractController
     private $keyController;
     private $providerRepository;
     private $providerProductRepository;
+    private $ordersRepository;
 
-    public function __construct(KeyController $keyController, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
+    public function __construct(KeyController $keyController, OrdersRepository $ordersRepository, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
     {
         $this->productsRepository = $productsRepository;
         $this->keyController = $keyController;
         $this->providerRepository = $providerRepository;
         $this->providerProductRepository = $providerProductRepository;
+        $this->ordersRepository = $ordersRepository;
     }
+    #[Route('/', name: 'app_provider_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        $data[]=[];
+        $orders = $this->ordersRepository->findBy(['status' => 'entregado']);
+        foreach ($orders as $ord) {
+            foreach($ord->getProductos() as $product){
+                $proveedor= $this->providerProductRepository->findOneBy(["id_product"=>$product->product_id]);
+              if($proveedor){
+                    $producto= $this->productsRepository->findOneBy(["idProduct"=>$product->product_id]);
+            $data []= [
+                "id_order" => $ord->getOrderId(),
+                "id_producto"=>$producto->getIdProduct(),
+                "order_date"=>$ord->getDateCreated(),
+                "proc_name"=>$proveedor->getNombProvider(),
+                "prod_name"=>$producto->getName()
+
+            ];
+            }
+
+
+
+            }
+        }
+
+        
+        return $this->render('provider/index.html.twig');
+    }
+
 
     #[Route('/getprovaiders', name: 'get_providers_from_woocomerce', methods: ['GET'])]
     public function getProvaider()

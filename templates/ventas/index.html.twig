@@ -1,20 +1,59 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello VentasController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/richard/cubamedia/cubamodela/src/Controller/VentasController.php'|file_link(0) }}">src/Controller/VentasController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/richard/cubamedia/cubamodela/templates/ventas/index.html.twig'|file_link(0) }}">templates/ventas/index.html.twig</a></code></li>
-    </ul>
-</div>
+  <div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">
+            # Orden
+          </th>
+          <th scope="col">
+            Nombre Producto
+          </th>
+          <th scope="col">
+            Id. Producto
+          </th>
+          <th scope="col">
+            Fecha de venta
+          </th>
+          <th scope="col">
+            Nombre Proveedor
+          </th>
+          <th scope="col">
+            Precio de Proveedor
+          </th>
+          <th scope="col">
+            Precio de Venta
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for vent in ventas %}
+          <tr scope="row">
+            <th scope="row">
+              {{ vent.id_ord }}
+            </th>
+            <th scope="row">
+              {{ vent.name }}
+            </th>
+            <th scope="row">
+              {{ vent.id_producto }}
+            </th>
+            <th scope="row">
+              {{ vent.fecha }}
+            </th>
+            <th scope="row">
+              {{ vent.nombre_prov }}
+            </th>
+            <th scope="row">
+              {{ vent.cost_prov }}
+            </th>
+             <th scope="row">
+              {{ vent.prec_vent}}
+            </th>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

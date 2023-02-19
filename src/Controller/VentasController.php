@@ -36,7 +36,7 @@ class VentasController extends AbstractController
     {
         $orders = $this->ordersRepository->findBy(['status' => 'entregado']);
         if ($orders == null) {
-            return new JsonResponse("Tsas Jodido chama");
+            return new JsonResponse("Error");
         }
         foreach ($orders as $ord) {
             foreach ($ord->getProductos() as $prod) {

@@ -65,7 +65,7 @@ class OrdersController extends AbstractController
         return new JsonResponse($orders);
     }
     #[Route('/save', name: 'app_orders_new', methods: ['GET', 'POST'])]
-    public function saveInBd(): JsonResponse
+    public function saveOrders(): JsonResponse
     {
         $page = 1;
         $orders = [];

@@ -392,7 +392,7 @@ class ProductsController extends AbstractController
             
         }
         
-        return new JsonResponse("Products Fuck");
+        return new JsonResponse("Products Variation Success");
     }
     public function saveVariation($idProducto){
         $page = 1;

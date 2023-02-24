@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductsRepository;
 use Doctrine\DBAL\Types\TextType;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -33,8 +34,8 @@ class Products
     #[Column(type: 'string', length: 255, nullable: true)]
     private $brand;
 
-    #[Column(type: 'string', nullable: true)]
-    private $date;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
@@ -42,17 +43,17 @@ class Products
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $permalink = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date_created = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_created = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date_created_gmt = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_created_gmt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date_modified = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_modified = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date_modified_gmt = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_modified_gmt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $type = null;
@@ -116,7 +117,6 @@ class Products
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idProduct = null;
-   
 
     public function getId(): ?int
     {
@@ -183,12 +183,12 @@ class Products
         return $this;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(?string $date): self
+    public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -219,48 +219,48 @@ class Products
         return $this;
     }
 
-    public function getDateCreated(): ?string
+    public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->date_created;
     }
 
-    public function setDateCreated(?string $date_created): self
+    public function setDateCreated(?\DateTimeInterface $date_created): self
     {
         $this->date_created = $date_created;
 
         return $this;
     }
 
-    public function getDateCreatedGmt(): ?string
+    public function getDateCreatedGmt(): ?\DateTimeInterface
     {
         return $this->date_created_gmt;
     }
 
-    public function setDateCreatedGmt(?string $date_created_gmt): self
+    public function setDateCreatedGmt(?\DateTimeInterface $date_created_gmt): self
     {
         $this->date_created_gmt = $date_created_gmt;
 
         return $this;
     }
 
-    public function getDateModified(): ?string
+    public function getDateModified(): ?\DateTimeInterface
     {
         return $this->date_modified;
     }
 
-    public function setDateModified(?string $date_modified): self
+    public function setDateModified(?\DateTimeInterface $date_modified): self
     {
         $this->date_modified = $date_modified;
 
         return $this;
     }
 
-    public function getDateModifiedGmt(): ?string
+    public function getDateModifiedGmt(): ?\DateTimeInterface
     {
         return $this->date_modified_gmt;
     }
 
-    public function setDateModifiedGmt(?string $date_modified_gmt): self
+    public function setDateModifiedGmt(?\DateTimeInterface $date_modified_gmt): self
     {
         $this->date_modified_gmt = $date_modified_gmt;
 

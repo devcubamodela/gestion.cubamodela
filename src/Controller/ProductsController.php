@@ -92,8 +92,8 @@ class ProductsController extends AbstractController
         $all_products = [];
         $woocommerce = new Client(
             'https://testingtiendaonline.cubamodela.com/',
-            'ck_f5610087fad2e45d2450d04a3e5a4d508697a6e2',
-            'cs_1793afc267a0ac84e1d55cbc764b33bfadf209ea',
+            'ck_9165c363f548a688c68e2c6fa3fd6ecddcf80c99',
+            'cs_fc6cf6161c04ef01684a8e4ba41200e94bdef29a',
             [
                 'wp_api' => true,
                 'version' => 'wc/v3',
@@ -296,6 +296,7 @@ class ProductsController extends AbstractController
      */
     public function push_products(): JsonResponse
     {
+
         $page = 1;
         $products = [];
         $all_products = [];

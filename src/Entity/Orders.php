@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrdersRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -39,31 +40,31 @@ class Orders
     private ?string $currency = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date_created = null;
+    private ?DateTime $date_created = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date_modified = null;
+    private ?DateTime $date_modified = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $discount_total = null;
+    private ?float $discount_total = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $discount_tax = null;
+    private ?float $discount_tax = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $shipping_total = null;
+    private ?float $shipping_total = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $shipping_tax = null;
+    private ?float $shipping_tax = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $cart_tax = null;
+    private ?float $cart_tax = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $total = null;
+    private ?float $total = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $prices_include_tax = null;
+    private ?float $prices_include_tax = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $customer_id = null;
@@ -108,10 +109,7 @@ class Orders
     private ?string $payment_method_title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date_paid = null;
-
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private array $productos = [];
+    private ?DateTime $date_paid = null;
 
     public function getId(): ?int
     {
@@ -214,108 +212,108 @@ class Orders
         return $this;
     }
 
-    public function getDateCreated(): ?string
+    public function getDateCreated(): ?DateTime
     {
         return $this->date_created;
     }
 
-    public function setDateCreated(?string $date_created): self
+    public function setDateCreated(?DateTime $date_created): self
     {
         $this->date_created = $date_created;
 
         return $this;
     }
 
-    public function getDateModified(): ?string
+    public function getDateModified(): ?DateTime
     {
         return $this->date_modified;
     }
 
-    public function setDateModified(?string $date_modified): self
+    public function setDateModified(?DateTime $date_modified): self
     {
         $this->date_modified = $date_modified;
 
         return $this;
     }
 
-    public function getDiscountTotal(): ?string
+    public function getDiscountTotal(): ?float
     {
         return $this->discount_total;
     }
 
-    public function setDiscountTotal(?string $discount_total): self
+    public function setDiscountTotal(?float $discount_total): self
     {
         $this->discount_total = $discount_total;
 
         return $this;
     }
 
-    public function getDiscountTax(): ?string
+    public function getDiscountTax(): ?float
     {
         return $this->discount_tax;
     }
 
-    public function setDiscountTax(?string $discount_tax): self
+    public function setDiscountTax(?float $discount_tax): self
     {
         $this->discount_tax = $discount_tax;
 
         return $this;
     }
 
-    public function getShippingTotal(): ?string
+    public function getShippingTotal(): ?float
     {
         return $this->shipping_total;
     }
 
-    public function setShippingTotal(?string $shipping_total): self
+    public function setShippingTotal(?float $shipping_total): self
     {
         $this->shipping_total = $shipping_total;
 
         return $this;
     }
 
-    public function getShippingTax(): ?string
+    public function getShippingTax(): ?float
     {
         return $this->shipping_tax;
     }
 
-    public function setShippingTax(?string $shipping_tax): self
+    public function setShippingTax(?float $shipping_tax): self
     {
         $this->shipping_tax = $shipping_tax;
 
         return $this;
     }
 
-    public function getCartTax(): ?string
+    public function getCartTax(): ?float
     {
         return $this->cart_tax;
     }
 
-    public function setCartTax(?string $cart_tax): self
+    public function setCartTax(?float $cart_tax): self
     {
         $this->cart_tax = $cart_tax;
 
         return $this;
     }
 
-    public function getTotal(): ?string
+    public function getTotal(): ?float
     {
         return $this->total;
     }
 
-    public function setTotal(?string $total): self
+    public function setTotal(?float $total): self
     {
         $this->total = $total;
 
         return $this;
     }
 
-    public function getPricesIncludeTax(): ?string
+    public function getPricesIncludeTax(): ?float
     {
         return $this->prices_include_tax;
     }
 
-    public function setPricesIncludeTax(?string $prices_include_tax): self
+    public function setPricesIncludeTax(?float $prices_include_tax): self
     {
         $this->prices_include_tax = $prices_include_tax;
 
@@ -490,26 +488,14 @@ class Orders
         return $this;
     }
 
-    public function getDatePaid(): ?string
+    public function getDatePaid(): ?DateTime
     {
         return $this->date_paid;
     }
 
-    public function setDatePaid(?string $date_paid): self
+    public function setDatePaid(?DateTime $date_paid): self
     {
         $this->date_paid = $date_paid;
-
-        return $this;
-    }
-
-    public function getProductos(): array
-    {
-        return $this->productos;
-    }
-
-    public function setProductos(?array $productos): self
-    {
-        $this->productos = $productos;
 
         return $this;
     }

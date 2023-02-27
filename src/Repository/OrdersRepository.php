@@ -74,7 +74,7 @@ class OrdersRepository extends ServiceEntityRepository
     $payment_method,
     $payment_method_title,
     $date_paid,
-    $productos){
+    ){
         
         $order= new Orders();
         $order
@@ -109,8 +109,8 @@ class OrdersRepository extends ServiceEntityRepository
         ->setShippingAddress1($shipping_address_1)
         ->setPaymentMethod($payment_method)
         ->setPaymentMethodTitle($payment_method_title)
-        ->setDatePaid($date_paid)
-        ->setProductos($productos);
+        ->setDatePaid($date_paid);
+        
 
         $this->entityManagerInterface->persist($order);
         $this->entityManagerInterface->flush();

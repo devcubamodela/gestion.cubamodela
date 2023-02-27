@@ -16,12 +16,12 @@ class KeyController extends AbstractController
         require __DIR__ . '/../../vendor/autoload.php';
         $woocommerce = new Client(
             'https://testingtiendaonline.cubamodela.com/',
-            'ck_9165c363f548a688c68e2c6fa3fd6ecddcf80c99',
-            'cs_fc6cf6161c04ef01684a8e4ba41200e94bdef29a',
+            'ck_51ebd65ac994a7342732ab406e365eba6bc11ebf',
+            'cs_376c2bce38390405f53ca9b989ac9b806d6abced',
             [
                 'wp_api' => true,
                 'version' => 'wc/v3',
-                'timeout' => 120,
+                'timeout' => 200,
 
             ]
         );
@@ -30,12 +30,12 @@ class KeyController extends AbstractController
     public function keyV2(){
         $woocommerce = new Client(
             'https://testingtiendaonline.cubamodela.com/',
-            'ck_9165c363f548a688c68e2c6fa3fd6ecddcf80c99',
-            'cs_fc6cf6161c04ef01684a8e4ba41200e94bdef29a',
+            'ck_51ebd65ac994a7342732ab406e365eba6bc11ebf',
+            'cs_376c2bce38390405f53ca9b989ac9b806d6abced',
             [
                 'wp_api' => true,
                 'version' => 'wp/v2',
-                'timeout' => 120,
+                'timeout' => 200,
     
             ]
         );

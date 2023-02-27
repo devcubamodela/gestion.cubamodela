@@ -34,8 +34,8 @@ class Products
     #[Column(type: 'string', length: 255, nullable: true)]
     private $brand;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTime $date;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
@@ -43,17 +43,17 @@ class Products
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $permalink = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_created = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTime $date_created = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_created_gmt = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTime $date_created_gmt = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_modified = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTime $date_modified = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_modified_gmt = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTime $date_modified_gmt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $type = null;
@@ -66,13 +66,7 @@ class Products
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $catalog_visibility = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $description = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $short_description = null;
-
+    
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $price = null;
 
@@ -117,6 +111,12 @@ class Products
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idProduct = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $short_description = null;
 
     public function getId(): ?int
     {
@@ -183,12 +183,12 @@ class Products
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate(?\DateTime $date): self
     {
         $this->date = $date;
 
@@ -219,48 +219,48 @@ class Products
         return $this;
     }
 
-    public function getDateCreated(): ?\DateTimeInterface
+    public function getDateCreated(): ?\DateTime
     {
         return $this->date_created;
     }
 
-    public function setDateCreated(?\DateTimeInterface $date_created): self
+    public function setDateCreated(?\DateTime $date_created): self
     {
         $this->date_created = $date_created;
 
         return $this;
     }
 
-    public function getDateCreatedGmt(): ?\DateTimeInterface
+    public function getDateCreatedGmt(): ?\DateTime
     {
         return $this->date_created_gmt;
     }
 
-    public function setDateCreatedGmt(?\DateTimeInterface $date_created_gmt): self
+    public function setDateCreatedGmt(?\DateTime $date_created_gmt): self
     {
         $this->date_created_gmt = $date_created_gmt;
 
         return $this;
     }
 
-    public function getDateModified(): ?\DateTimeInterface
+    public function getDateModified(): ?\DateTime
     {
         return $this->date_modified;
     }
 
-    public function setDateModified(?\DateTimeInterface $date_modified): self
+    public function setDateModified(?\DateTime $date_modified): self
     {
         $this->date_modified = $date_modified;
 
         return $this;
     }
 
-    public function getDateModifiedGmt(): ?\DateTimeInterface
+    public function getDateModifiedGmt(): ?\DateTime
     {
         return $this->date_modified_gmt;
     }
 
-    public function setDateModifiedGmt(?\DateTimeInterface $date_modified_gmt): self
+    public function setDateModifiedGmt(?\DateTime $date_modified_gmt): self
     {
         $this->date_modified_gmt = $date_modified_gmt;
 

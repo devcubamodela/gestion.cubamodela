@@ -313,13 +313,13 @@ class ProductsController extends AbstractController
                     
                     $id = $prod->id;
                     $name = $prod->name;
-                    $sku = $prod->sku;
-                    $date_created = $prod->date_created;
+                    $sku = $prod->sku;               
+                    $date_created =  new \DateTime(date('Y-m-d', strtotime($prod->date_created)));
                     $slug = $prod->slug;
-                    $date_modified_gmt = $prod->date_modified_gmt;
-                    $date_created_gmt = $prod->date_created_gmt;
-                    $date_modified = $prod->date_modified;
-                    $date_modified_gmt = $prod->date_modified_gmt;
+                    $date_modified_gmt = new \DateTime(date('Y-m-d', strtotime($prod->date_modified_gmt)));;
+                    $date_created_gmt = new \DateTime(date('Y-m-d', strtotime($prod->date_created_gmt)));
+                    $date_modified = new \DateTime(date('Y-m-d', strtotime($prod->date_modified)));
+                    $date_modified_gmt = new \DateTime(date('Y-m-d', strtotime($prod->date_modified_gmt)));
                     $type = $prod->type;
                     $status = $prod->status;
                     $featured = $prod->featured;
@@ -338,7 +338,7 @@ class ProductsController extends AbstractController
                     $stock_status = $prod->stock_status;
                     $backorders = $prod->backorders;
                     $backorders_allowed = $prod->backorders_allowed;
-    
+                 
                     $this->productsRepository->ProductRegister(
                         $id,
                         $name,
@@ -372,7 +372,7 @@ class ProductsController extends AbstractController
             $page++;
         } while (count($products) > 0);
         
-        return new JsonResponse("Products Saved");
+        return new JsonResponse(sizeof($this->productsRepository->findAll()));
     }
      /**
      * @Route("/saveVariation", name= "products_variation", methods="GET")
@@ -444,7 +444,7 @@ class ProductsController extends AbstractController
                 "id" => $prod->getIdProduct(),
                 "name" => $prod->getName(),
                 "sku" => $prod->getSku(),
-                "date_created" => $prod->getDateCreated(),
+                "date_created" =>$prod->getDateCreated()->format('d-M-Y'),
                 "slug" => $prod->getSlug(),
                 "date_modified_gmt" => $prod->getDateModifiedGmt(),
                 "date_created_gmt" => $prod->getDateCreatedGmt(),

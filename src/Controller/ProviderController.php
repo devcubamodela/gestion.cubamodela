@@ -46,27 +46,27 @@ class ProviderController extends AbstractController
     #[Route('/', name: 'app_provider_index', methods: ['GET'])]
     public function index(): Response
     {
-        $data[]=[];
-        $orders = $this->ordersRepository->findBy(['status' => 'entregado']);
-        foreach ($orders as $ord) {
-            foreach($ord->getProductos() as $product){
-                $proveedor= $this->providerProductRepository->findOneBy(["id_product"=>$product->product_id]);
-              if($proveedor){
-                    $producto= $this->productsRepository->findOneBy(["idProduct"=>$product->product_id]);
-            $data []= [
-                "id_order" => $ord->getOrderId(),
-                "id_producto"=>$producto->getIdProduct(),
-                "order_date"=>$ord->getDateCreated(),
-                "proc_name"=>$proveedor->getNombProvider(),
-                "prod_name"=>$producto->getName()
+        // $data[]=[];
+        // $orders = $this->ordersRepository->findBy(['status' => 'entregado']);
+        // foreach ($orders as $ord) {
+        //     foreach($ord->getProductos() as $product){
+        //         $proveedor= $this->providerProductRepository->findOneBy(["id_product"=>$product->product_id]);
+        //       if($proveedor){
+        //             $producto= $this->productsRepository->findOneBy(["idProduct"=>$product->product_id]);
+        //     $data []= [
+        //         "id_order" => $ord->getOrderId(),
+        //         "id_producto"=>$producto->getIdProduct(),
+        //         "order_date"=>$ord->getDateCreated(),
+        //         "proc_name"=>$proveedor->getNombProvider(),
+        //         "prod_name"=>$producto->getName()
 
-            ];
-            }
+        //     ];
+        //     }
 
 
 
-            }
-        }
+        //     }
+        // }
 
         
         return $this->render('provider/index.html.twig');

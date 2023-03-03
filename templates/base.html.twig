@@ -3,53 +3,46 @@
 	<head>
 		<style>
 			.navEspecial {
-				background-image: url("{{ asset('navbar.png','imagenlogo') }}");
-				 background-size: cover;
+				background-image: url("{{ asset('navbar.png', 'imagenlogo') }}");
+				background-size: cover;
 
-        /* Workaround for some mobile browsers */
-        min-height: 100%;
+				/* Workaround for some mobile browsers */
+				min-height: 100%;
 			}
-			.navCartel{
+			.navCartel {
 				font-family: Ubuntu;
-				color:#FFFFFF;
+				color: #FFFFFF;
 				margin-top: 10px;
 			}
-			.infosignal{
-				width:20px;
-				height:20px;
+			.infosignal {
+				width: 20px;
+				height: 20px;
 
+			}
+			.navIcons {
+				width: 27px;
+				height: 27px;
+				margin-top: 10px;
+				margin-left: 10px;
+				margin-right: 10px;
 			}
 		</style>
 
 		<meta charset="UTF-8">
-
-		<nav class="navbar navbar-expand-lg bg-body-tertiary">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Navbar</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Features</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Pricing</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link disabled">Disabled</a>
-						</li>
-					</ul>
-
-				</div>
-
+		<nav class="navbar bg-light ">
+			<div class="container">
+				<a class="navbar-brand ms-auto" href="#">
+					<img src="{{ asset('Lupa_Gris.png','imagenlogo') }}" class="navIcons"/>
+				</a>
+				<a class="navbar-brand" href="#">
+					<img src="{{ asset('Campana_Gris.png','imagenlogo') }}" class="navIcons"/>
+				</a>
+				<a class="navbar-brand" href="#">
+					<img src="{{ asset('Correo_Gris.svg','imagenlogo') }}" class="navIcons"/>
+				</a>
 			</div>
-
 		</nav>
+
 
 		{% block header %}{% endblock %}
 

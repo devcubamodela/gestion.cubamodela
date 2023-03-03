@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<style>
+			.navEspecial {
+				background-image: url("{{ asset('navbar.png','imagenlogo') }}");
+				 background-size: cover;
+
+        /* Workaround for some mobile browsers */
+        min-height: 100%;
+			}
+			.navCartel{
+				font-family: Ubuntu;
+				color:#FFFFFF;
+				margin-top: 10px;
+			}
+			.infosignal{
+				width:20px;
+				height:20px;
+
+			}
+		</style>
+
 		<meta charset="UTF-8">
 
 		<nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -24,11 +44,15 @@
 							<a class="nav-link disabled">Disabled</a>
 						</li>
 					</ul>
+
 				</div>
+
 			</div>
+
 		</nav>
-		
-		
+
+		{% block header %}{% endblock %}
+
 
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
@@ -40,9 +64,7 @@
 		{% endblock %}
 	</head>
 	<body>
-		{% block body %}
-		
-		{% endblock %}
+		{% block body %}{% endblock %}
 
 
 	</body>

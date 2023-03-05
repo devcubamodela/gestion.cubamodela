@@ -2,14 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\Claves;
+use App\Repository\ClavesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request as Req;
 use Symfony\Component\Routing\Annotation\Route;
 use Automattic\WooCommerce\Client;
+use Automattic\WooCommerce\HttpClient\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
+#[Route('/key', name: 'app_key_new')]
 class KeyController extends AbstractController
 {
+    private $clavesRepository;
+    public function __construct(ClavesRepository $clavesRepository){
+        $this->clavesRepository= $clavesRepository;
+    }
+
     public function index()
     {
         
@@ -42,5 +52,12 @@ class KeyController extends AbstractController
 
       return $woocommerce;
     }
-   
+    #[Route('/save', name: 'saveKey', methods: ['GET', 'POST'])]
+    public function saveKey(Req $request):Response{
+        $ck=json_decode($request->getContent(),false)->ck;
+        $cs=json_decode($request->getContent(),false)->cs;
+        $this->clavesRepository->RegisterKeys($ck,$cs);
+
+      return new JsonResponse("super");
+    }
 }

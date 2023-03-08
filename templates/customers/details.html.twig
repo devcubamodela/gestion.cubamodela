@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Details Customer{% endblock %}
+
+{% block body %}
+<style>
+    {# .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; } #}
+</style>
+
+<div class="example-wrapper">
+    {% if mensaje == "" %}
+     <table class="bordered">
+        <thead>
+            <tr>
+                <th>
+                No
+                </th>
+                <th>
+                Date Created
+                </th>
+                <th>
+                Date Created GTM
+                </th>
+                <th>
+                Email
+                </th>
+                <th>
+                First Name
+                </th>
+                <th>
+                Last Name
+                </th>
+                <th>
+                Role
+                </th>
+                <th>
+                Username
+                </th>
+                <th>
+                First Name Billing
+                </th>
+                <th>
+                Last Name Billing
+                </th>
+                <th>
+                Address 1 Billing
+                </th>
+                <th>
+                Company Billing
+                </th>
+                <th>
+                Address 2 Billing
+                </th>
+                <th>
+                City Billing
+                </th>
+                <th>
+                State Billing
+                </th>
+                <th>
+                Postcode Billing
+                </th>
+                <th>
+                Country Billing
+                </th>
+                <th>
+                Email Billing
+                </th>
+                <th>
+                Phone Billing
+                </th>
+                <th>
+                First Name Shipping
+                </th>
+                <th>
+                Last Name Shipping
+                </th>
+                <th>
+                Company Shipping
+                </th>
+                <th>
+                Address 1 Shipping
+                </th>
+                <th>
+                Address 2 Shipping
+                </th>
+                <th>
+                City Shipping
+                </th>
+                <th>
+                State Shipping
+                </th>
+                <th>
+                Postcode Shipping
+                </th>
+                <th>
+                Country Shipping
+                </th>
+                <th>
+                Is Paying Customer
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>
+                    1
+                    </td>
+                    <td>
+                    {{data.dateCreated}}
+                    </td>
+                    <td>
+                    {{data.dateCreatedGmt}}
+                    </td>
+                    <td>
+                    {{data.email}}
+                    </td>
+                    <td>
+                    {{data.firstName}}
+                    </td>
+                    <td>
+                    {{data.lastName}}
+                    </td>
+                    <td>
+                    {{data.role}}
+                    </td>
+                    <td>
+                    {{data.username}}
+                    </td>
+                    <td>
+                    {{data.firstNameBiling}}
+                    </td>
+                    <td>
+                    {{data.lastNameBiling}}
+                    </td>
+                    <td>
+                    {{data.address1Biling}}
+                    </td>
+                    <td>
+                    {{data.companyBiling}}
+                    </td>
+                    <td>
+                    {{data.address2Biling}}
+                    </td>
+                    <td>
+                    {{data.cityBiling}}
+                    </td>
+                    <td>
+                    {{data.stateBiling}}
+                    </td>
+                    <td>
+                    {{data.postcodeBiling}}
+                    </td>
+                    <td>
+                    {{data.countryBiling}}
+                    </td>
+                    <td>
+                    {{data.emailBiling}}
+                    </td>
+                    <td>
+                    {{data.phoneBiling}}
+                    </td>
+                    <td>
+                    {{data.firstNameShipping}}
+                    </td>
+                    <td>
+                    {{data.lastNameShipping}}
+                    </td>
+                    <td>
+                    {{data.companyShipping}}
+                    </td>
+                    <td>
+                    {{data.address1Shipping}}
+                    </td>
+                    <td>
+                    {{data.address2Shipping}}
+                    </td>
+                    <td>
+                    {{data.cityShipping}}
+                    </td>
+                    <td>
+                    {{data.stateShipping}}
+                    </td>
+                    <td>
+                    {{data.postcodeShipping}}
+                    </td>
+                    <td>
+                    {{data.countryShipping}}
+                    </td>
+                    <td>
+                    {{data.isPayingCustomer}}
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+    {% else %}
+        {{mensaje}}
+    {% endif %}
+</div>
+{% endblock %}

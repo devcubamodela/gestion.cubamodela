@@ -4,11 +4,13 @@
 
 {% block body %}
    
-    <blockquote class="blockquote text-center">
+    <div class="container">
+        <div class="row">
+            <div class="bg-light mt-4 p-4">
 					
-					
+            <blockquote class="blockquote text-center">			
     <h1 class="h3 mb-3 font-weight-normal">Registrarse</h1>
-
+    </blockquote>
     {{ form_start(registrationForm) }}
     
     
@@ -23,6 +25,9 @@
 				<button class=" btnSpecific" type="submit">
 					<h4 class="h4login">Registrarse</h4>
                     </button>
+        </blockquote>
     {{ form_end(registrationForm) }}
-    </blockquote>
+    </div>
+        </div>
+    </div>
 {% endblock %}

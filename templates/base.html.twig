@@ -33,12 +33,13 @@
 				text-align: center;
 				padding: 5px 30px;
 				margin: auto;
+				border-color: white;
 			}
 			.h4login{
 				color: #FFFFFF;
 			}
 		</style>
-
+		{% block header %}
 		<meta charset="UTF-8">
 		<nav class="navbar bg-light ">
 			<div class="container">
@@ -55,7 +56,7 @@
 		</nav>
 
 
-		{% block header %}{% endblock %}
+		{% endblock %}
 
 
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}

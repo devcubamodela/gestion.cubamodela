@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+	{% block title %}Register
+	{% endblock %}
+	
+	{% block body %}
+		<div class="col-sm-3 mx-auto ">
+			<blockquote class="blockquote text-center">
+			
+				<img src="{{ asset('images/avatar-default.png') }}" class="createIcon">
+
+				<h1 class="h3 mb-3 font-weight-normal">Crear Cuenta
+				</blockquote>
+			</h1>
+		{{ form_start(form_user) }}
+		<div class="mb-3">
+				{{  form_label(form_user.email, 'Email')  }}
+				{{ form_widget(form_user.email, {attr:{'placeholder':'Email','pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$'}}) }}
+				
+			</div>
+			<div class="mb-3">
+				
+				{{ form_widget(form_user.password, {attr:{'placeholder':'Password','type':'password'}}) }}
+				
+			</div>
+		{{ form_widget(form_user) }}
+		<button class="btnSpecific h4login">{{ button_label|default('Crear cuenta') }}</button>
+		</div>
+	{{ form_end(form_user) }}
+		{% endblock %}
+		

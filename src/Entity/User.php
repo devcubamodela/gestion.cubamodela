@@ -33,6 +33,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nombre = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $apellidos = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telefono = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $marca = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatar = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,6 +126,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(?string $nombre): self
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getApellidos(): ?string
+    {
+        return $this->apellidos;
+    }
+
+    public function setApellidos(?string $apellidos): self
+    {
+        $this->apellidos = $apellidos;
+
+        return $this;
+    }
+
+    public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(?string $telefono): self
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    public function getMarca(): ?string
+    {
+        return $this->marca;
+    }
+
+    public function setMarca(?string $marca): self
+    {
+        $this->marca = $marca;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

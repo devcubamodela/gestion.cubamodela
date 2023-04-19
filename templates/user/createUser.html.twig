@@ -16,7 +16,7 @@
 			</h1>
 		{{ form_start(form_user) }}
 		<div class="mb-3">
-				{{  form_label(form_user.email, 'Email')  }}
+				{{  form_label|trans(form_user.email, 'Email')}  }}
 				{{ form_widget(form_user.email, {attr:{'placeholder':'Email','pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$'}}) }}
 				
 			</div>

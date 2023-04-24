@@ -2,12 +2,15 @@
 
 	{% block title %}Register
 	{% endblock %}
-	
+	{% block header %}
+	{% endblock %}
 	{% block body %}
 		
 		<div class="col-sm-3 mx-auto ">
 			<img src="{{ asset('images/CBM_1.png') }}" class="cbmIcon">
 			<blockquote class="blockquote text-center">
+			<br>
+			<br>
 			
 				<img src="{{ asset('images/avatar-default.png') }}" class="createIcon">
 
@@ -16,7 +19,7 @@
 			</h1>
 		{{ form_start(form_user) }}
 		<div class="mb-3">
-				{{  form_label|trans(form_user.email, 'Email')}  }}
+				{{  form_label(form_user.email, 'Email')}}
 				{{ form_widget(form_user.email, {attr:{'placeholder':'Email','pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$'}}) }}
 				
 			</div>

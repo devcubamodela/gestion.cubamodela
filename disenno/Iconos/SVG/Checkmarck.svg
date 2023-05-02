@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 57.14 57.14">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3a57e8;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <title>Checkmarck</title>
+  <g id="Capa_2" data-name="Capa 2">
+    <g id="Capa_1-2" data-name="Capa 1">
+      <g>
+        <circle class="cls-1" cx="28.57" cy="28.57" r="28.57"/>
+        <g>
+          <polyline class="cls-1" points="12.56 28.76 22.04 40.52 44.58 16.62"/>
+          <path class="cls-2" d="M22,43h-.1a2.53,2.53,0,0,1-1.85-.93L10.61,30.33a2.5,2.5,0,0,1,3.9-3.14l7.68,9.53L42.76,14.9a2.5,2.5,0,0,1,3.64,3.43L23.86,42.23A2.52,2.52,0,0,1,22,43Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

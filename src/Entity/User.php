@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'Ya existe un usuario con ese email')]
 #[UniqueEntity(fields: ['email'], message: 'Ya existe un usuario con ese email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -19,6 +20,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email(
+        message: 'El correo {{ value }} no es un email valido.',
+    )]
+    #[Assert\Unique(
+        message: 'El correo {{ value }} no es un email valido.',
+    )]
+    #[Assert\Length(
+        min: 2,
+        max: 40,
+        minMessage: 'Tu correo debe tener al menos {{ limit }} caracteres',
+        maxMessage: 'Tu correo no puede ser mas de {{ limit }} caracteres',
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -28,19 +41,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(
+        min: 6,
+        minMessage: 'Tu contraseña debe tener al menos {{ limit }} caracteres',
+    )]
+    #[Assert\NotCompromisedPassword]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        min: 2,
+        max: 40,
+        minMessage: 'Tu nombre debe tener al menos {{ limit }} caracteres',
+        maxMessage: 'Tu nombre no puede ser mas de {{ limit }} caracteres',
+    )]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        min: 2,
+        max: 40,
+        minMessage: 'Tu apellido debe tener al menos {{ limit }} caracteres',
+        maxMessage: 'Tu apellido no puede ser mas de {{ limit }} caracteres',
+    )]
     private ?string $apellidos = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $telefono = null;
+    #[Assert\Length(
+        min: 8,
+        max: 10,
+        minMessage: 'Tu telefono debe tener al menos {{ limit }} caracteres',
+        maxMessage: 'Tu telefono no puede ser mas de {{ limit }} caracteres',
+    )]
+    private ?int $telefono = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $marca = null;
@@ -154,12 +190,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelefono(): ?string
+    public function getTelefono(): ?int
     {
         return $this->telefono;
     }
 
-    public function setTelefono(?string $telefono): self
+    public function setTelefono(?int $telefono): self
     {
         $this->telefono = $telefono;
 

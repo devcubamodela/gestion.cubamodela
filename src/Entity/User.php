@@ -20,18 +20,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\Email(
-        message: 'El correo {{ value }} no es un email valido.',
-    )]
-    #[Assert\Unique(
-        message: 'El correo {{ value }} no es un email valido.',
-    )]
-    #[Assert\Length(
-        min: 2,
-        max: 40,
-        minMessage: 'Tu correo debe tener al menos {{ limit }} caracteres',
-        maxMessage: 'Tu correo no puede ser mas de {{ limit }} caracteres',
-    )]
+   
     private ?string $email = null;
 
     #[ORM\Column]

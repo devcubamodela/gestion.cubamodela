@@ -12,9 +12,9 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_verify');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -29,4 +29,20 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    #[Route('/verify', name: 'app_verify')]
+    public function index(): Response
+    {
+		$this->denyAccessUnlessGranted("IS_AUTHENTICATED_FULLY");
+
+		/** @var User $user */
+		$user = $this->getUser();
+
+		return match ($user->isVerified()) {
+			true => $this->render("base.html.twig"),
+			false => $this->render("admin/please-verify-email.html.twig"),
+		};
+    }
+
+
 }

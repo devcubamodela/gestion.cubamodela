@@ -1,8 +1,11 @@
+<h1>Hola confirme su registro</h1>
 
-<h4>Bienvenue chez Studiyo</h4>
 <p>
-    Merci de confirmer votre adresse mail en cliquant sur le lien ci-dessous: <br><br>
-  
+    Por favor, confirme su dirección de correo electrónico haciendo clic en el siguiente enlace: <br><br>
+    <a href="{{ signedUrl }}">Confirm my Email</a>.
+    Este enlace caducará en {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
 </p>
-<br>
-<p>L'équipe Studyo :)</p>
+
+<p>
+    Bienvenido!
+</p>

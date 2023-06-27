@@ -63,12 +63,8 @@ class RegistrationController extends AbstractController
             );
             $entityManager->persist($user);
             $entityManager->flush();
-            $idUser = $this->userRepository->findOneBy(['email' => $user->getEmail()])->getId();
-            $signatureComponents = $this->verifyEmailHelper->generateSignature(
-                'registration_confirmation_route',
-                $idUser,
-                $user->getEmail()
-            );
+           
+            
             $this->emailVerifier->sendEmailConfirmation(
                 'app_verify_email',
                 $user,
@@ -85,9 +81,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/verify", name="registration_confirmation_route")
-     */
+   
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request): Response
     {
@@ -105,6 +99,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_verify');
     }
 }

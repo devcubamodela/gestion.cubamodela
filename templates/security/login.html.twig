@@ -40,7 +40,10 @@
 	<br>
 	<div class="form-group">
 		<label for="inputPassword">Password</label>
-		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+		<div class="eye">
+			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required >
+			<img src="{{ asset('images/eye.png') }}" class="iconeye" id="iconeye">
+		</div>
 	</div>
 	<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 	<br>
@@ -75,12 +78,23 @@
 </div>
 
 <blockquote class="blockquote text-center"></blockquote></div>{#
-					        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-					        See https://symfony.com/doc/current/security/remember_me.html
-					
-					        <div class="checkbox mb-3">
-					            <label>
-					                <input type="checkbox" name="_remember_me"> Remember me
-					            </label>
-					        </div>
-					    #}</form></div>{% endblock %}{% block footer %}<br><br><br><br><br><br><br><br><img src="{{ asset('images/navbar.png') }}" width="100%" height="auto">{% endblock %}
+						        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+						        See https://symfony.com/doc/current/security/remember_me.html
+						
+						        <div class="checkbox mb-3">
+						            <label>
+						                <input type="checkbox" name="_remember_me"> Remember me
+						            </label>
+						        </div>
+						    #}</form></div>{% endblock %}{% block footer %}<br><br><br><br><br><br><br><br><img src="{{ asset('images/navbar.png') }}" width="100%" height="auto"><script>var eye = document.getElementById("iconeye");
+var input = document.getElementById("inputPassword");
+eye.addEventListener("click", function () {
+if (input.type == "password") {
+input.type = "text"
+eye.style.opacity = 0.8
+
+} else {
+input.type = "password"
+eye.style.opacity = 0.2
+}
+})</script>{% endblock %}

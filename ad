@@ -1,0 +1,49 @@
+[33me26efaa[m[33m ([m[1;36mHEAD -> [m[1;32mrichard[m[33m)[m Busqueda y procesamiento de proveedor
+[33ma87e96a[m[33m ([m[1;31morigin/richard[m[33m)[m Boton para visualizar password
+[33m73e61f2[m Modify email verify
+[33mf6d1c1d[m Email Verification
+[33m096e6ba[m Confirmacion de registro por email
+[33m01dd9cf[m Fix bugs in register and add validations
+[33m66db333[m Add translations and app disigners
+[33m3405aaf[m modify register template
+[33m7f7144c[m Login screen fix bugs
+[33m81626d0[m Poner icono CBM y corregir carteles con errores ortograficos
+[33m771bc5f[m Fix Bug register
+[33m7751849[m Validaciones, Correcciones de Bugs, Adicionar Estilos al formulario de registro
+[33m75136a8[m Add style al formulario de registro
+[33m081d684[m Add style a los botones de notificaciones
+[33mbce9555[m Disenno de la interfaz register
+[33m45187b3[m adicionando formato al login y enrutamiento
+[33m66aac50[m Adicionar estilo al login
+[33mc3eb04e[m arreglo de los estilos
+[33m12d694d[m Login and register full worked sin estilos
+[33m08d07db[m First Commit
+[33m9b6bae0[m All
+[33mb607db0[m Organizacion de estrructura
+[33mf3cd58e[m Register and login
+[33m46bc373[m test
+[33m440d8f5[m Test
+[33m76ccfe2[m cambios en la estructura
+[33mca6c0c4[m gestion de claves de acceso
+[33mde4dd0c[m Customers
+[33mf4708a0[m Alinear iconos del navbar
+[33m1434cbb[m Vista de Provaider adicionar estilos
+[33mf3ec441[m Trabajo en las imagenes
+[33m8f5b5fd[m Interfaz provider
+[33m52f2d74[m trabajo en la interfaz
+[33m1b719d2[m Poner estilos en el proyecto
+[33m8a8a4c6[m Endpoints para productos y Ordenes de woocomerce listos
+[33mdbddeba[m Cambio de tipo de variables
+[33m54bd11e[m Correccion de diagramas
+[33m3a156bb[m Update Diagrams
+[33m326f520[m Menors Modifications
+[33mfa865ab[m Diagramas de clase
+[33mb851536[m Templates
+[33m07a3a83[m Update diagrama UML
+[33m85f1dcf[m Rectificacion de solicitud de orders, products, provider
+[33mcba8b75[m Realizacion de consultas para obtener proveedores de las ordenes, Realizacion y obtencion de las ventas, Realizacion y obtencion de los proveedores, creacion de endpoints y clases auxiliares
+[33m8fba178[m[33m ([m[1;31morigin/almacen[m[33m, [m[1;31morigin/Roxana[m[33m, [m[1;31morigin/Carlos[m[33m, [m[1;32malmacen[m[33m)[m Update de los controllers
+[33me74636b[m add orders
+[33m0ffad41[m add template
+[33mfba53b7[m Merge all branch's
+[33m3a52909[m[33m ([m[1;32mmaster[m[33m)[m First Commit

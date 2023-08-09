@@ -19,12 +19,14 @@ use Automattic\WooCommerce\Client;
 use PhpParser\Node\Expr\ArrayItem;
 use App\Controller\GlobalFuntionsController;
 use App\Entity\Orders;
+use App\Entity\OrdersProducts;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
 use App\Repository\OrdersRepository;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
-
+use App\Repository\OrdersProductsRepository;
 #[Route('/provider')]
 class ProviderController extends AbstractController
 {
@@ -34,80 +36,112 @@ class ProviderController extends AbstractController
     private $providerRepository;
     private $providerProductRepository;
     private $ordersRepository;
+    private $ordersProductRepository;
 
-    public function __construct(KeyController $keyController, OrdersRepository $ordersRepository, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
+    public function __construct(OrdersProductsRepository $ordersProductRepository ,KeyController $keyController, OrdersRepository $ordersRepository, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
     {
         $this->productsRepository = $productsRepository;
         $this->keyController = $keyController;
         $this->providerRepository = $providerRepository;
         $this->providerProductRepository = $providerProductRepository;
         $this->ordersRepository = $ordersRepository;
+        $this->ordersProductRepository = $ordersProductRepository;
     }
     #[Route('/', name: 'app_provider_index', methods: ['GET'])]
     public function index(): Response
     {
-        // $data[]=[];
-        // $orders = $this->ordersRepository->findBy(['status' => 'entregado']);
-        // foreach ($orders as $ord) {
-        //     foreach($ord->getProductos() as $product){
-        //         $proveedor= $this->providerProductRepository->findOneBy(["id_product"=>$product->product_id]);
-        //       if($proveedor){
-        //             $producto= $this->productsRepository->findOneBy(["idProduct"=>$product->product_id]);
-        //     $data []= [
-        //         "id_order" => $ord->getOrderId(),
-        //         "id_producto"=>$producto->getIdProduct(),
-        //         "order_date"=>$ord->getDateCreated(),
-        //         "proc_name"=>$proveedor->getNombProvider(),
-        //         "prod_name"=>$producto->getName()
-
-        //     ];
-        //     }
 
 
 
-        //     }
-        // }
-
-        
         return $this->render('provider/index.html.twig');
     }
 
 
-    #[Route('/getprovaiders', name: 'get_providers_from_woocomerce', methods: ['GET'])]
-    public function getProvaider()
+    #[Route('/getprovaiders', name: 'get_providers_data', methods: ['GET'])]
+    public function getProvaider(Request $request)
     {
-        $page = 1;
-        $provider = [];
-        $data_provider = [];
-        $all_provider = [];
-        $data_out[] = [];
-        $data_out_product[] = [];
+        $orders = [];
+        $ordersTest = [];
+        $requestIdProveedor = json_decode($request->getContent())->id;
+        $productos=$this->providerProductRepository->findBy(['Id_Prvider'=>$requestIdProveedor]);
+        foreach($productos as $prod){
+            $orders=$this->ordersProductRepository->findBy(["id_product"=>$prod->getIdProduct()]);
+            $ordersTest= $this->getDeliveredOrders($orders);  
+            $dataout[]=[
+                "IdProducto"=>$prod->getIdProduct(),
+                "Cant Vendidos"=>sizeof($ordersTest),
 
-        $provider = $this->keyController->keyV2()->get('allproviders');
-        foreach ($provider as $prov) {
-            $provider = $this->providerRepository->findOneBy(["name" => $prov->meta_value]);
-            if (!$provider) {
-                $name = $prov->meta_value;
-                $codigo = "null";
-                $this->providerRepository->ProviderRegister($name, $codigo);
-                $datnombres_proveed = ["proveedor_nombre" => $prov->meta_value];
-                $data_provider = $this->keyController->keyV2()->post('providers', $datnombres_proveed, true);
-                foreach ($data_provider as $provid) {
-                    $prov_prod = $this->providerProductRepository->findOneBy(["nomb_provider" => $prov->meta_value, "id_product" => $provid->post_id]);
-                    if (!$prov_prod) {
-                        $this->providerProductRepository->provid_product_register($name, $provid->post_id, $provid->cost);
-                    } else {
-                        $this->providerProductRepository->provid_product_register($name, $provid->post_id, $provid->cost);
-                    }
-                }
-            }
+                "Fechas de Ordenes"=>$ordersTest
+
+            ];
+           
         }
+       
 
+        return new JsonResponse($dataout);
+    }
+    
+    public function getDeliveredOrders($orders){
+       $ordersOut= [];
+        if(sizeof($orders)>0){
+            foreach($orders as $ord){
+                array_push($ordersOut,$this->ordersRepository->findBy(["orderId"=>$ord->getIdOrder(), "status"=>"entregado"],['date_paid' => 'DESC']));
+            }
+            foreach($ordersOut as $orden){
+                foreach($orden as $aux){
+                    $date=$aux->getDatePaid();
+                    $data[]=[
+                        "ID"=>$aux->getOrderId(),
+                        
+                        "fecha"=>date_format($date, 'Y-m-d')
+                       ];
+                }
+               
+             }
+           
+        }
+        return $data;
+    }
 
-        return new JsonResponse("salvado providers");
+    #[Route('/saveProvider', name: 'save_providers', methods: ['POST'])]
+    public function saveProvider(Request $request)
+    {
+        if(!empty($request)){
+            $requestAux = json_decode($request->getContent());
+         foreach($requestAux as $prov){
+              $idProvider= $prov->id;
+              $name= $prov->name;
+              $codigo= $prov->codigo;
+              $productid= $prov->productid;
+              if(!$this->existeProveedor($idProvider, $name)){
+                $this->providerRepository->ProviderRegister($idProvider, $name, $codigo);
+                foreach($productid as $products){
+                   $prodId= $products->prodId;
+                   $cost = $products->cost;
+                   $this->providerProductRepository->provid_product_register($idProvider,$prodId,$cost);
+                }
+                
+              }
+              
+              
+         }
+        }
+        else{
+            return  new Response("No hay datos");
+        }
+        return  new Response("Proveedores salvados");
     }
 
 
+    public function existeProveedor($id,$name){
+
+          $provider= $this->providerRepository->findOneBy(["id_Proveedor" => $id,"name" => $name]);
+          if($provider){
+              return true;
+          }
+          else{return false;}
+
+    }
     // #[Route('/', name: 'app_provider_index', methods: ['GET'])]
     // public function index(ProviderRepository $providerRepository): Response
     // {

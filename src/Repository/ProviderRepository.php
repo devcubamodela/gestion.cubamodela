@@ -43,12 +43,14 @@ class ProviderRepository extends ServiceEntityRepository
         }
     }
     public function ProviderRegister(
+        $id_Proveedor,
         $name,
         $codigo,
         
     ) {
         $newProvider = new Provider();
         $newProvider
+            ->setIdProveedor($id_Proveedor)
             ->setName($name)
             ->setCodigo($codigo);
         $this->entityManagerInterface->persist($newProvider);

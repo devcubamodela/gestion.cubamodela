@@ -46,13 +46,13 @@ class ProviderProductRepository extends ServiceEntityRepository
         }
     }
     public function provid_product_register(
-        $nomb_proveedor,
+        $id_proveedor,
         $id_product,
         $costo
     ) {
         $newProv_product = new ProviderProduct();
         $newProv_product
-            ->setNombProvider($nomb_proveedor)
+            ->setIdPrvider($id_proveedor)
             ->setIdProduct($id_product)
             ->setCost($costo);
         $this->entityManagerInterface->persist($newProv_product);

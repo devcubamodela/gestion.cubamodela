@@ -22,6 +22,10 @@ class ProviderProduct
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cost = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Id_Prvider = null;
+
+  
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,30 @@ class ProviderProduct
     public function setCost(?string $cost): self
     {
         $this->cost = $cost;
+
+        return $this;
+    }
+
+    public function getIdPrvider(): ?string
+    {
+        return $this->Id_Prvider;
+    }
+
+    public function setIdPrvider(string $Id_Prvider): static
+    {
+        $this->Id_Prvider = $Id_Prvider;
+
+        return $this;
+    }
+
+    public function getIdProvider(): ?string
+    {
+        return $this->Id_Provider;
+    }
+
+    public function setIdProvider(string $Id_Provider): static
+    {
+        $this->Id_Provider = $Id_Provider;
 
         return $this;
     }

@@ -76,97 +76,99 @@ class OrdersController extends AbstractController
     public function getOrders(): JsonResponse
     {
         $page = 1;
-        $orders []= [];
+        $orders = [];
         $all_orders = [];
         do {
             try {
                 $orders = $this->keyController->index()->get('orders', array('per_page' => 50, 'page' => $page));
-               
+                return new JsonResponse(count($orders));
             } catch (HttpClientException $e) {
                 die("Can't get orders: $e");
             }
             $all_orders = array_merge($all_orders, $orders);
-            $page++;
-        } while (sizeof($orders) > 0);
-        foreach ($all_orders as $ord) {
-            $order = $this->ordersRepository->findOneBy(["orderId" => $ord->id]);
-            if (!$order) {
-                $orderId = $ord->id;
-                $parent_id = $ord->parent_id;
-                $number = $ord->number;
-                $order_key = $ord->order_key;
-                $created_via = $ord->created_via;
-                $version = $ord->version;
-                $status = $ord->status;
-                $currency = $ord->currency;
-                $date_created = new \DateTime(date('Y-m-d', strtotime($ord->date_created)));
-                $date_modified = new \DateTime(date('Y-m-d', strtotime($ord->date_modified)));
-                $discount_total = $ord->discount_total;
-                $discount_tax = $ord->discount_tax;
-                $shipping_total = $ord->shipping_total;
-                $shipping_tax = $ord->shipping_tax;
-                $cart_tax = $ord->cart_tax;
-                $total = $ord->total;
-                $prices_include_tax = $ord->prices_include_tax;
-                $customer_id = $ord->customer_id;
-                $customer_ip_address = $ord->customer_ip_address;
-                $customer_user_agent = $ord->customer_user_agent;
-                $customer_note = $ord->customer_note;
-                $billing_first_name = $ord->billing->first_name;
-                $billing_last_name = $ord->billing->last_name;
-                $billing_address_1 = $ord->billing->address_1;
-                $billing_email = $ord->billing->email;
-                $billing_phone = $ord->billing->phone;
-                $shipping_first_name = $ord->shipping->first_name;
-                $shipping_last_name = $ord->shipping->last_name;
-                $shipping_address_1 =$ord->shipping->address_1;
-                $payment_method = $ord->payment_method;
-                $payment_method_title = $ord->payment_method_title;
-                $date_paid = new \DateTime(date('Y-m-d', strtotime($ord->date_paid)));
-                $productos=$ord->line_items;                   
-                foreach($productos as $product){
-                    $orderProducts = $this->ordersProductsRepository->findOneBy(["id_order" => $orderId,"id_product"=>$product->product_id]);
-                    if(!$orderProducts){
-                    $this->ordersProductsRepository->RegisterOrdersProducts($orderId, $product->product_id);
-                }
-                }
-                $this->ordersRepository->RegisterOrders($orderId,
-                $parent_id,
-                $number,
-                $order_key,
-                $created_via,
-                $version,
-                $status,
-                $currency,
-                $date_created,
-                $date_modified,
-                $discount_total,
-                $discount_tax,
-                $shipping_total,
-                $shipping_tax,
-                $cart_tax,
-                $total,
-                $prices_include_tax,
-                $customer_id,
-                $customer_ip_address,
-                $customer_user_agent,
-                $customer_note,
-                $billing_first_name,
-                $billing_last_name,
-                $billing_address_1,
-                $billing_email,
-                $billing_phone,
-                $shipping_first_name,
-                $shipping_last_name,
-                $shipping_address_1,
-                $payment_method,
-                $payment_method_title,
-                $date_paid,
-                );
-            }
-        }
-    return new JsonResponse("Success");
+            
+        } while (count($orders) > 0);
+        
+        
 }
 
 }
-
+//sizeof($this->ordersRepository->findAll())
+// foreach ($all_orders as $ord) {
+//     $order = $this->ordersRepository->findOneBy(["orderId" => $ord->id]);
+//     if (!$order) {
+//         $orderId = $ord->id;
+//         $parent_id = $ord->parent_id;
+//         $number = $ord->number;
+//         $order_key = $ord->order_key;
+//         $created_via = $ord->created_via;
+//         $version = $ord->version;
+//         $status = $ord->status;
+//         $currency = $ord->currency;
+//         $date_created = new \DateTime(date('Y-m-d', strtotime($ord->date_created)));
+//         $date_modified = new \DateTime(date('Y-m-d', strtotime($ord->date_modified)));
+//         $discount_total = $ord->discount_total;
+//         $discount_tax = $ord->discount_tax;
+//         $shipping_total = $ord->shipping_total;
+//         $shipping_tax = $ord->shipping_tax;
+//         $cart_tax = $ord->cart_tax;
+//         $total = $ord->total;
+//         $prices_include_tax = $ord->prices_include_tax;
+//         $customer_id = $ord->customer_id;
+//         $customer_ip_address = $ord->customer_ip_address;
+//         $customer_user_agent = $ord->customer_user_agent;
+//         $customer_note = $ord->customer_note;
+//         $billing_first_name = $ord->billing->first_name;
+//         $billing_last_name = $ord->billing->last_name;
+//         $billing_address_1 = $ord->billing->address_1;
+//         $billing_email = $ord->billing->email;
+//         $billing_phone = $ord->billing->phone;
+//         $shipping_first_name = $ord->shipping->first_name;
+//         $shipping_last_name = $ord->shipping->last_name;
+//         $shipping_address_1 =$ord->shipping->address_1;
+//         $payment_method = $ord->payment_method;
+//         $payment_method_title = $ord->payment_method_title;
+//         $date_paid = new \DateTime(date('Y-m-d', strtotime($ord->date_paid)));
+//         $productos=$ord->line_items;                   
+//         foreach($productos as $product){
+//             $orderProducts = $this->ordersProductsRepository->findOneBy(["id_order" => $orderId,"id_product"=>$product->product_id]);
+//             if(!$orderProducts){
+//             $this->ordersProductsRepository->RegisterOrdersProducts($orderId, $product->product_id);
+//         }
+//         }
+//         $this->ordersRepository->RegisterOrders($orderId,
+//         $parent_id,
+//         $number,
+//         $order_key,
+//         $created_via,
+//         $version,
+//         $status,
+//         $currency,
+//         $date_created,
+//         $date_modified,
+//         $discount_total,
+//         $discount_tax,
+//         $shipping_total,
+//         $shipping_tax,
+//         $cart_tax,
+//         $total,
+//         $prices_include_tax,
+//         $customer_id,
+//         $customer_ip_address,
+//         $customer_user_agent,
+//         $customer_note,
+//         $billing_first_name,
+//         $billing_last_name,
+//         $billing_address_1,
+//         $billing_email,
+//         $billing_phone,
+//         $shipping_first_name,
+//         $shipping_last_name,
+//         $shipping_address_1,
+//         $payment_method,
+//         $payment_method_title,
+//         $date_paid,
+//         );
+//     }
+// }
+// $page++;

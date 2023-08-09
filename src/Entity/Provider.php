@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProviderRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProviderRepository::class)]
@@ -19,9 +20,21 @@ class Provider
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $codigo = null;
 
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private array $idProducts = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $id_Proveedor = null;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function setId(string $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -44,6 +57,30 @@ class Provider
     public function setCodigo(?string $codigo): self
     {
         $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    public function getIdProducts(): array
+    {
+        return $this->idProducts;
+    }
+
+    public function setIdProducts(?array $idProducts): static
+    {
+        $this->idProducts = $idProducts;
+
+        return $this;
+    }
+
+    public function getIdProveedor(): ?string
+    {
+        return $this->id_Proveedor;
+    }
+
+    public function setIdProveedor(string $id_Proveedor): static
+    {
+        $this->id_Proveedor = $id_Proveedor;
 
         return $this;
     }

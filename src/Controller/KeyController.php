@@ -37,21 +37,20 @@ class KeyController extends AbstractController
         );
         return $woocommerce;
     }
-    public function keyV2(){
-        $woocommerce = new Client(
-            'https://testingtiendaonline.cubamodela.com/',
-            'ck_51ebd65ac994a7342732ab406e365eba6bc11ebf',
-            'cs_376c2bce38390405f53ca9b989ac9b806d6abced',
-            [
-                'wp_api' => true,
-                'version' => 'wp/v2',
-                'timeout' => 200,
+    // public function keyV2(){
+    //     require __DIR__ . '/../../vendor/autoload.php';
+    //     $woocommerce = new Client(
+    //         'https://testing.cbmtienda.com/',,
+    //         [
+    //             'wp_json' => true,
+    //             'version' => 'wp/v2',
+    //             'timeout' => 200,
     
-            ]
-        );
+    //         ]
+    //     );
 
-      return $woocommerce;
-    }
+    //   return $woocommerce;
+    // }
     #[Route('/save', name: 'saveKey', methods: ['GET', 'POST'])]
     public function saveKey(Req $request):Response{
         $ck=json_decode($request->getContent(),false)->ck;

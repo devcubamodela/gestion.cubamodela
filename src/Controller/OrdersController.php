@@ -19,7 +19,7 @@ use App\Controller\KeyController;
 use App\Repository\OrdersProductsRepository;
 
 
-#[Route('/orders')]
+#[Route('/web/orders')]
 
 class OrdersController extends AbstractController
 {

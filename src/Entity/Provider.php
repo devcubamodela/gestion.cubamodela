@@ -26,6 +26,9 @@ class Provider
     #[ORM\Column(length: 255)]
     private ?string $id_Proveedor = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $email = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +84,18 @@ class Provider
     public function setIdProveedor(string $id_Proveedor): static
     {
         $this->id_Proveedor = $id_Proveedor;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): static
+    {
+        $this->email = $email;
 
         return $this;
     }

@@ -31,7 +31,7 @@ use PHPUnit\Framework\Constraint\IsEmpty;
 
 use App\Repository\OrdersProductsRepository;
 
-#[Route('/provider')]
+#[Route('/web/provider')]
 class ProviderController extends AbstractController
 {
 
@@ -54,10 +54,26 @@ class ProviderController extends AbstractController
     #[Route('/', name: 'app_provider_index', methods: ['GET'])]
     public function index(): Response
     {
+        $totalVendidos=0;
+        $user =$this->getUser()->getUserIdentifier() ;
+        $providerIn = $this->providerRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $productos = $this->providerProductRepository->findBy(['Id_Prvider' => $providerIn->getIdProveedor()]);
+       foreach ($productos as $prod) {
+            $orders = $this->ordersProductRepository->findBy(["id_product" => $prod->getIdProduct()]);
+            $ordersTest = $this->getDeliveredOrders($orders);
+            $totalVendidos= sizeof($ordersTest) + $totalVendidos;
+            $dataToShow[] = [
+                "IdProducto" => $prod->getIdProduct(),
+                "Cant_Vendidos" => sizeof($ordersTest),
+                "Costo"=>sizeof($ordersTest)*$prod->getCost(),
+                "Fechas de Ordenes" => $ordersTest,
+               
 
-
-
-        return $this->render('provider/index.html.twig');
+            ];
+        }
+        
+             
+          return $this->render('provider/index.html.twig',['data'=>$dataToShow,'total'=>$totalVendidos]);
     }
 
 
@@ -102,7 +118,8 @@ class ProviderController extends AbstractController
         $orders = [];
         $ordersTest = [];
         $requestIdProveedor = json_decode($request->getContent())->id;
-        $productos = $this->providerProductRepository->findBy(['Id_Prvider' => $requestIdProveedor]);
+        
+        $productos = $this->providerProductRepository->findBy(['id_provider' => $requestIdProveedor]);
         foreach ($productos as $prod) {
             $orders = $this->ordersProductRepository->findBy(["id_product" => $prod->getIdProduct()]);
             $ordersTest = $this->getDeliveredOrders($orders);

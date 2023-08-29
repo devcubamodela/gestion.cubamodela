@@ -19,10 +19,7 @@ use App\Controller\KeyController;
 use App\Repository\ProductVariationRepository;
 
 
-/**
- * @Route("/products")
- */
-
+#[Route('/web/products')]
 class ProductsController extends AbstractController
 {
     private $productsRepository;

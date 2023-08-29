@@ -40,18 +40,19 @@
 
 						</thead>
 						<tbody>
+						{% for dataproduct in data %}
 							<tr scope="row">
 								<th scope="row">
-									1
+									 {{ loop.index}}
 								</th>
 								<th scope="row">
-									2
+									 {{ dataproduct.IdProducto }}
 								</th>
 								<th scope="row">
-									3
+									{{ dataproduct.Cant_Vendidos }}
 								</th>
 								<th scope="row">
-									4
+									{{ dataproduct.Costo }}
 								</th>
 								<th scope="row">
 									4
@@ -59,22 +60,22 @@
 								<th><img src="{{ asset('Info.png','imagenlogo') }}" class="infosignal"/></th>
 
 							</tr>
-
+{% endfor %}
 						</tbody>
 						<tfoot>
 							<td>
 								<h5>Total:</h5>
 							</td>
-							<th scope="row">10</th>
+							<th scope="row">{{ total }}</th>
 						</tfoot>
 					</td>
 				</table>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="col-sm-6">
-	<div class="shadow p-0 mb-5 bg-body rounded">
+
+    <div class="col-sm-6">
+	     <div class="shadow p-0 mb-5 bg-body rounded">
 		<div class="card">
 			<div class="card-body">
 				<h5 class="card-title text-end">04/2023</h5>
@@ -164,6 +165,12 @@
 					</tfoot>
 				</td>
 			</table>
+		    </div>
+	        </div>
+           </div>  
+	        </div>
+		
 		</div>
-	</div>
-</div></div></div>{% endblock %}
+
+
+{% endblock %}

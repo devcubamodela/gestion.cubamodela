@@ -12,9 +12,10 @@
 
 	</nav>
 
-</nav>{% endblock %}{% block body %}
+</nav>{% endblock %}
+{% block body %}
 <br/>
-<div class="row mx-auto">
+<div class="cardCenter row mx-auto">
 	<div class="col-sm-6 mb-3 mb-sm-0">
 		<div class="shadow p-0 mb-5 bg-body rounded">
 			<div class="card">
@@ -57,7 +58,7 @@
 								<th scope="row">
 									4
 								</th>
-								<th><img src="{{ asset('Info.png','imagenlogo') }}" class="infosignal"/></th>
+								<th><a href="{{ path('sell_product_history', {'variable':  dataproduct.IdProducto}) }}" ><img src="{{ asset('Info.png','imagenlogo') }}" class="infosignal"/></th></a>
 
 							</tr>
 {% endfor %}
@@ -74,103 +75,7 @@
 		</div>
 	</div>
 
-    <div class="col-sm-6">
-	     <div class="shadow p-0 mb-5 bg-body rounded">
-		<div class="card">
-			<div class="card-body">
-				<h5 class="card-title text-end">04/2023</h5>
-				<table class="table">
-					<thead>
-						<td>
-							<h5 style="color:#3A57E8">#</h5>
-						</td>
-						<td>
-							<h5 style="color:#3A57E8">Producto</h5>
-						</td>
-						<td>
-							<h5 style="color:#3A57E8">Ventas</h5>
-						</td>
-						<td>
-							<h5 style="color:#3A57E8">Ganancias</h5>
-						</td>
-						<td>
-							<h5 style="color:#3A57E8">Inventario</h5>
-						</td>
-					</thead>
-					<tbody>
-						<tr scope="row">
-							<th scope="row">
-								1
-							</th>
-							<th scope="row">
-								2
-							</th>
-							<th scope="row">
-								3
-							</th>
-							<th scope="row">
-								4
-							</th>
-							<th scope="row">
-								4
-							</th>
-							<th><img src="{{ asset('Info.png','imagenlogo') }}" class="infosignal"/></th>
-
-						</tr>
-						<tr scope="row">
-							<th scope="row">
-								1
-							</th>
-							<th scope="row">
-								2
-							</th>
-							<th scope="row">
-								3
-							</th>
-							<th scope="row">
-								4
-							</th>
-							<th scope="row">
-								4
-							</th>
-							<th><img src="{{ asset('Info.png','imagenlogo') }}" class="infosignal"/></th>
-
-						</tr>
-						<tr scope="row">
-							<th scope="row">
-								1
-							</th>
-							<th scope="row">
-								2
-							</th>
-							<th scope="row">
-								3
-							</th>
-							<th scope="row">
-								4
-							</th>
-							<th scope="row">
-								4
-							</th>
-							<th><img src="{{ asset('Info.png','imagenlogo') }}" class="infosignal"/></th>
-
-						</tr>
-
-					</tbody>
-					<tfoot>
-						<td>
-							<h5>Total:</h5>
-						</td>
-						<th scope="row">10</th>
-					</tfoot>
-				</td>
-			</table>
-		    </div>
-	        </div>
-           </div>  
-	        </div>
-		
-		</div>
+   
 
 
 {% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Provider
+{% endblock %}
+
+{% block header %}
+
+	<nav class="navbar bg-body-tertiary navEspecial">
+		<ul>
+		<div class="container-fluid">
+			<h4 class="navCartel">Ventas</h4>
+		</div>
+		</ul>
+		<ul>
+		<div class="container-fluid">
+		<a href="{{ path('app_provider_index')}}">	<h4 class="navCartel">Back</h4></a>
+		</div>
+		</ul>
+
+	</nav>
+
+</nav>{% endblock %}
+{% block body %}
+<br/>
+
+<table class="cardCenter table">
+						<thead>
+							<td>
+								<h5 style="color:#00000">Producto ID: {{ productId}}</h5>
+							</td>
+							<td>
+								<h5 style="color:#000000">Nombre de Producto: {{ productName}}</h5>
+							</td>
+							<td>
+								<h5 style="color:#000000">Producto SKU: {{ productSku}}</h5>
+							</td>
+
+						</thead>
+</table>
+
+	
+
+<div class="cardCenter row mx-auto">
+	<div class="col-sm-6 mb-3 mb-sm-0">
+		<div class="shadow p-0 mb-5 bg-body rounded">
+			<div class="card">
+				<div class="card-body">
+					
+					<table class="table">
+						<thead>
+							<td>
+								<h5 style="color:#3A57E8">#</h5>
+							</td>
+							<td>
+								<h5 style="color:#3A57E8">Id Orden</h5>
+							</td>
+							<td>
+								<h5 style="color:#3A57E8">Fecha de Entrega</h5>
+							</td>
+
+						</thead>
+						<tbody>
+						{% for dat in dataOrders %}
+							<tr scope="row">
+								<th scope="row">
+									 {{ loop.index}}
+								</th>
+								<th scope="row">
+									 {{ dat.idOrder }}
+								</th>
+								<th scope="row">
+									{{ dat.fechaEntregado }}
+								</th>
+								
+								
+
+							</tr>
+{% endfor %}
+						</tbody>
+						<tfoot>
+							<td>
+								<h5>Total:</h5>
+							</td>
+							<th scope="row"></th>
+						</tfoot>
+					</td>
+				</table>
+			</div>
+		</div>
+	</div>
+
+   
+
+
+{% endblock %}

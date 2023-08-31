@@ -75,7 +75,28 @@ class ProviderController extends AbstractController
              
           return $this->render('provider/index.html.twig',['data'=>$dataToShow,'total'=>$totalVendidos]);
     }
-
+    #[Route('/dataOfSells/{variable}', name:'sell_product_history', methods: ['Get'])]
+    public function productsSellsDataHistory($variable):Response
+    {
+        $orders= $this->ordersProductRepository->findBy(["id_product" => $variable]);
+        $product=$this->productsRepository->findOneBy(["idProduct"=> $variable]);
+        
+           
+        
+         
+        
+        foreach($orders as $ord){
+            $order= $this->ordersRepository->findOneBy(["orderId"=>$ord->getIdOrder()]);
+            $dataOrder[]=[
+                "idOrder"=>$order->getOrderId(),
+                "fechaEntregado"=>date_format($order->getDatePaid(), 'Y-m-d'),
+            ];
+           
+        }
+        
+       
+        return $this->render('provider/productOrdersDataHistory.html.twig',['dataOrders'=>$dataOrder,'productId'=> $product->getIdProduct(),'productName'=> $product->getName(),'productSku'=>$product->getSku()]);
+    }
 
     #[Route('/saveProviderAPI', name: 'save_providers_api', methods: ['POST'])]
     public function saveProviderApi()

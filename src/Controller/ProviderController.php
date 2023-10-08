@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Provider;
 use App\Form\ProviderType;
 use App\Repository\ProviderRepository;
+use ArrayObject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,14 +67,22 @@ class ProviderController extends AbstractController
                 "IdProducto" => $prod->getIdProduct(),
                 "Cant_Vendidos" => sizeof($ordersTest),
                 "Costo"=>sizeof($ordersTest)*$prod->getCost(),
-                "Fechas de Ordenes" => $ordersTest,
+                "Fechas_de_Ordenes" => $ordersTest,
                
 
             ];
         }
-        
-             
+        // $dataObjects = new ArrayObject($dataToShow);
+        //     $dataOutOrder= usort($dataObjects, $this->object_sorter('Fechas_de_Ordenes')); 
+        //     return new JsonResponse($dataObjects);
           return $this->render('provider/index.html.twig',['data'=>$dataToShow,'total'=>$totalVendidos]);
+    }
+
+    function object_sorter($clave,$orden=null) {
+        return function ($a, $b) use ($clave,$orden) {
+              $result=  ($orden=="DESC") ? strnatcmp($b->$clave, $a->$clave) :  strnatcmp($a->$clave, $b->$clave);
+              return $result;
+        };
     }
     #[Route('/dataOfSells/{variable}', name:'sell_product_history', methods: ['Get'])]
     public function productsSellsDataHistory($variable):Response
@@ -98,7 +107,7 @@ class ProviderController extends AbstractController
         return $this->render('provider/productOrdersDataHistory.html.twig',['dataOrders'=>$dataOrder,'productId'=> $product->getIdProduct(),'productName'=> $product->getName(),'productSku'=>$product->getSku()]);
     }
 
-    #[Route('/saveProviderAPI', name: 'save_providers_api', methods: ['POST'])]
+    #[Route('/saveProviderAPI', name: 'save_providers_api', methods: ['GET'])]
     public function saveProviderApi()
     {
         $page = 1;
@@ -178,16 +187,18 @@ class ProviderController extends AbstractController
         return $data;
     }
 
-    #[Route('/saveProvider', name: 'save_providers', methods: ['POST'])]
+    #[Route('/saveProvider', name: 'save_providers', methods: ['Post'])]
     public function saveProvider(Request $request)
     {
         if (!empty($request)) {
             $requestAux = json_decode($request->getContent());
+
             foreach ($requestAux as $prov) {
-                $idProvider = $prov->id;
+               $idProvider = $prov->id;
                 $name = $prov->name;
                 $codigo = $prov->codigo;
                 $productid = $prov->productid;
+               
                 if (!$this->existeProveedor($idProvider, $name)) {
                     $this->providerRepository->ProviderRegister($idProvider, $name, $codigo);
                     foreach ($productid as $products) {
@@ -201,6 +212,7 @@ class ProviderController extends AbstractController
             return  new Response("No hay datos");
         }
         return  new Response("Proveedores salvados");
+       
     }
 
 

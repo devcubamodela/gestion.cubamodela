@@ -1,8 +1,20 @@
 {% extends 'base.html.twig' %}
-
+{% trans_default_domain "app" %}
 {% block title %}
- Welcome
 {% endblock %}
+{% block header %}
+
+
+
+	<nav class="navbar navbar-expand-lg navEspecial">
+    <a  type="button" class="btn btn-light d-flex me-auto margenBoton" a href={{ path('allProducts') }} >Productos</a>
+	<a  type="button" class="btn btn-light d-flex ms-auto margenBoton" a href={{ path('app_login') }} >Autenticarse</a>
+    
+	</nav>
+
+
+
+</nav>{% endblock %}
 
 {% block body %}
 

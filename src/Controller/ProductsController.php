@@ -429,9 +429,7 @@ class ProductsController extends AbstractController
         return new JsonResponse($products);
     }
 
-    /**
-     * @Route("/getall", name= "getAllProducts")
-     */
+    #[Route(path: '/allProducts', name: 'allProducts')]
     public function getAllProducts()
     {
 

@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% block title %}Crear Nuevo Pago
+{% endblock %}
+{% block header %}{% endblock %}
+{% block body %}
+	<div class="cardCenter row mx-auto">
+		<div class="col-sm-8 mb-3 mb-sm-0">
+			<div class="shadow p-0 mb-5 bg-body rounded">
+				{{ form_start(form) }}
+
+				<section class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-10">
+							<div class="row g-6">
+								<div class="col-sm">
+									{{  form_label(form.idProducto, 'Id Producto')}}
+									{{ form_widget(form.idProducto, {attr:{'placeholder':'Id Producto'}}) }}
+
+								</div>
+								<div class="col-sm">
+									{{  form_label(form.idOrden, 'Id Orden')}}
+									{{ form_widget(form.idOrden, {attr:{'placeholder':'Id Orden'}}) }}
+
+								</div>
+								<div class="col-sm">
+									{{  form_label(form.idProveedor, 'Id Proveedor')}}
+									{{ form_widget(form.idProveedor, {attr:{'placeholder':'Id Proveedor'}}) }}
+
+								</div>
+
+							</div>
+							<br>
+							<br>
+							<div class="row g-3">
+
+								<div class="col-sm">
+									{{  form_label(form.fechaPagado, 'Fecha Pagado')}}
+									{{ form_widget(form.fechaPagado) }}
+
+								</div>
+								<div class="col-sm">
+									{{  form_label(form.trazaPagado, 'Traza De Pago')}}
+									{{ form_widget(form.trazaPagado, {attr:{'placeholder':'Traza De Pago'}}) }}
+
+								</div>
+								<div class="col-sm">
+									{{  form_label(form.cantidadPagado, 'Cantidad Pagado')}}
+									{{ form_widget(form.cantidadPagado, {attr:{'placeholder':'Cantidad Pagado'}}) }}
+
+								</div>
+							</div>
+							<br>
+							<br>
+							<div class="row g-3">
+								<div class="col-sm">
+									{{  form_label(form.pagado, 'Pagado')}}
+									{{ form_widget(form.pagado, ) }}
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</section>
+				{{ form_widget(form) }}
+				<br>
+				<br>
+				<div class="cardCenter row mx-auto">
+					<button class="btn btn-outline-primary my-2 my-sm-0">{{ button_label|default('Save') }}</button>
+				</div>
+				<br>
+				<br>
+				{{ form_end(form) }}
+
+			</div>
+		</div>
+
+	</div>
+{% endblock %}

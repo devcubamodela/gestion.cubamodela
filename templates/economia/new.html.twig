@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Economia{% endblock %}
+
+{% block body %}
+    <h1>Create new Economia</h1>
+
+    {{ include('economia/_form.html.twig') }}
+
+    <a href="{{ path('app_economia_index') }}">back to list</a>
+{% endblock %}

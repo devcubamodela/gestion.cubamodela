@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Provider
+        
+    
+{% endblock %}
+
+{% block header %}
+
+    <nav class="navbar bg-body-tertiary navEspecial">
+        <div class="container-fluid">
+            
+                <a href="{{ path('app_economia_index') }}">
+                    <h4 class="navCartel">                              
+                Economia
+                </h4>
+                </a>             
+            
+        </div>
+
+    </nav>
+
+</nav>{% endblock %}{% block body %}
+<br>
+   
+<br>
+        <div class="cardCenter row mx-auto">
+            <div class="col-sm-8 mb-3 mb-sm-0">
+                <div class="shadow p-0 mb-5 bg-body rounded">
+                    <section class="container">
+                        <form class="form-inline" name="test" method="POST" action="{{ path('app_economia_filter') }}">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10">
+                                <div class="row g-3">
+                                   <h4> No tiene Permisos para entrar a este Modulo</h4>
+                                   <a href="{{ path('route_principal') }}"><p type="button" class="btn btn-outline-success my-2 my-sm-0">Inicio</p></a>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </section>
+                        <br>
+                    <div class="card">
+                        <div class="card-body">
+                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+        {% endblock %}
+        

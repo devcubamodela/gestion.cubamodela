@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+
+    {% block header %}
+
+        <nav class="navbar bg-body-tertiary navEspecial">
+            <div class="container-fluid">
+                
+                    <a href="{{ path('app_economia_index') }}">
+                        <h4 class="navCartel">                              
+                    Pagar Factura
+                    </h4>
+                    </a>             
+                
+            </div>
+    
+        </nav>
+    
+    </nav>{% endblock %}
+{% block body %}
+<br>
+<br>
+<br>
+<div class="cardCenter row mx-auto">
+		<div class="col-sm-8 mb-3 mb-sm-0">
+			
+    {{ include('economia/_form.html.twig', {'button_label': 'Guardar'}) }}
+
+    <a class="btn btn-outline-primary my-2 my-sm-0" href="{{ path('app_economia_index') }}">Atras</a>
+
+ 
+            </div>
+           
+            </div>
+{% endblock %}

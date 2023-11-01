@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Economia{% endblock %}
+
+{% block body %}
+    <h1>Economia</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ economium.id }}</td>
+            </tr>
+            <tr>
+                <th>IdProducto</th>
+                <td>{{ economium.idProducto }}</td>
+            </tr>
+            <tr>
+                <th>IdOrden</th>
+                <td>{{ economium.idOrden }}</td>
+            </tr>
+            <tr>
+                <th>IdProveedor</th>
+                <td>{{ economium.idProveedor }}</td>
+            </tr>
+            <tr>
+                <th>Pagado</th>
+                <td>{{ economium.pagado ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>FechaPagado</th>
+                <td>{{ economium.fechaPagado ? economium.fechaPagado|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>TrazaPagado</th>
+                <td>{{ economium.trazaPagado }}</td>
+            </tr>
+            <tr>
+                <th>CantidadPagado</th>
+                <td>{{ economium.cantidadPagado }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_economia_index') }}">back to list</a>
+
+    <a href="{{ path('app_economia_edit', {'id': economium.id}) }}">edit</a>
+
+    {{ include('economia/_delete_form.html.twig') }}
+{% endblock %}

@@ -61,6 +61,7 @@ class EconomiaController extends AbstractController
     #[Route('/', name: 'app_economia_index', methods: ['GET'])]
     public function index(EconomiaRepository $economiaRepository): Response
     {
+        
         $user = $this->userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $roles = $user->getRoles();
         if (in_array("ROLE_ECONOMIA", $user->getRoles())) {

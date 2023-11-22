@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\KeyController;
 use App\Repository\ProductsRepository;
 use App\Repository\ProviderProductRepository;
+use App\Repository\UserRepository;
 use App\Entity\Products;
 use PhpParser\Node\Expr\Empty_;
 use Automattic\WooCommerce\Client;
@@ -42,8 +43,9 @@ class ProviderController extends AbstractController
     private $providerProductRepository;
     private $ordersRepository;
     private $ordersProductRepository;
+    private $userRepository;
 
-    public function __construct(OrdersProductsRepository $ordersProductRepository, KeyController $keyController, OrdersRepository $ordersRepository, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
+    public function __construct(UserRepository $userRepository, OrdersProductsRepository $ordersProductRepository, KeyController $keyController, OrdersRepository $ordersRepository, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
     {
         $this->productsRepository = $productsRepository;
         $this->keyController = $keyController;
@@ -51,31 +53,40 @@ class ProviderController extends AbstractController
         $this->providerProductRepository = $providerProductRepository;
         $this->ordersRepository = $ordersRepository;
         $this->ordersProductRepository = $ordersProductRepository;
+        $this->userRepository = $userRepository;
     }
     #[Route('/', name: 'app_provider_index', methods: ['GET'])]
     public function index(): Response
     {
         $totalVendidos=0;
-        $user =$this->getUser()->getUserIdentifier() ;
-        $providerIn = $this->providerRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
-        $productos = $this->providerProductRepository->findBy(['Id_Prvider' => $providerIn->getIdProveedor()]);
-       foreach ($productos as $prod) {
-            $orders = $this->ordersProductRepository->findBy(["id_product" => $prod->getIdProduct()]);
-            $ordersTest = $this->getDeliveredOrders($orders);
-            $totalVendidos= sizeof($ordersTest) + $totalVendidos;
-            $dataToShow[] = [
-                "IdProducto" => $prod->getIdProduct(),
-                "Cant_Vendidos" => sizeof($ordersTest),
-                "Costo"=>sizeof($ordersTest)*$prod->getCost(),
-                "Fechas_de_Ordenes" => $ordersTest,
-               
-
-            ];
+        $user =$this->getUser()->getUserIdentifier();
+        $role =$this->userRepository->findOneBy(['email' => $user])->getRoles();
+        if(in_array("ROLE_USER_PROVIDER",$role)){
+            $providerIn = $this->providerRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+            $productos = $this->providerProductRepository->findBy(['Id_Prvider' => $providerIn->getIdProveedor()]);
+           foreach ($productos as $prod) {
+                $orders = $this->ordersProductRepository->findBy(["id_product" => $prod->getIdProduct()]);
+                $ordersTest = $this->getDeliveredOrders($orders);
+                $totalVendidos= sizeof($ordersTest) + $totalVendidos;
+                $dataToShow[] = [
+                    "IdProducto" => $prod->getIdProduct(),
+                    "Cant_Vendidos" => sizeof($ordersTest),
+                    "Costo"=>sizeof($ordersTest)*$prod->getCost(),
+                    "Fechas_de_Ordenes" => $ordersTest,
+                   
+    
+                ];
+            }
+            // $dataObjects = new ArrayObject($dataToShow);
+            //     $dataOutOrder= usort($dataObjects, $this->object_sorter('Fechas_de_Ordenes')); 
+            //     return new JsonResponse($dataObjects);
+              return $this->render('provider/index.html.twig',['data'=>$dataToShow,'total'=>$totalVendidos]);
         }
-        // $dataObjects = new ArrayObject($dataToShow);
-        //     $dataOutOrder= usort($dataObjects, $this->object_sorter('Fechas_de_Ordenes')); 
-        //     return new JsonResponse($dataObjects);
-          return $this->render('provider/index.html.twig',['data'=>$dataToShow,'total'=>$totalVendidos]);
+        else{
+            return $this->render('error/index.html.twig');
+        }
+        
+       
     }
 
     function object_sorter($clave,$orden=null) {

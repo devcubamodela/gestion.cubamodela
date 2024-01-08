@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Almacen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 /**
  * @extends ServiceEntityRepository<Almacen>
@@ -16,27 +18,26 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AlmacenRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,EntityManagerInterface $entityManagerInterface)
     {
         parent::__construct($registry, Almacen::class);
+        $this->entityManagerInterface=$entityManagerInterface;
     }
 
-    public function save(Almacen $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
+    public function RegisterAlmacen(
+        $nombre,
+        $direccion,
+    ) {
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
+        $newAlmacen = new Almacen();
+        $newAlmacen
+            ->setNombre($nombre)
+            ->setDireccion($direccion);
 
-    public function remove(Almacen $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+
+        $this->entityManagerInterface->persist($orderToPay);
+        $this->entityManagerInterface->flush();
     }
 
 //    /**

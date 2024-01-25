@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+    {% block header %}
+
+        <nav class="navbar bg-body-tertiary navEspecial">
+            <div class="container-fluid">
+                
+                    <a href="{{ path('app_almacen_index') }}">
+                        <h4 class="navCartel">                              
+                    Almacen
+                    </h4>
+                    </a>             
+            </div>
+    
+        </nav>
+    
+    </nav>{% endblock %}
+
+{% block body %}
+    <div class="cardCenter row mx-auto mt-5">
+        <div class="col-sm-8 mb-3 mb-sm-0">
+            <div class="shadow p-0 mb-5 bg-body rounded">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ almacen.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ almacen.direccion }}</td>
+            </tr>
+        </tbody>
+    </table>
+            </div></div></div>
+            <div class="d-flex align-content-center m-5">
+               
+                    <a class="btn btn-outline-primary my-2 my-sm-0 m-2" href="{{ path('app_almacen_index') }}">Atrast</a>
+                   
+                    <a class="btn btn-outline-primary my-2 my-sm-0 m-2" href="{{ path('app_almacen_edit', {'id': almacen.id}) }}">Editar</a>
+                    {{ include('almacen/_delete_form.html.twig') }}
+              
+            
+               
+            </div>
+  
+{% endblock %}

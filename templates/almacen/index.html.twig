@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AlmacenController!{% endblock %}
-    
+
     {% block header %}
-    
+
         <nav class="navbar bg-body-tertiary navEspecial">
             <div class="container-fluid">
                 
-                    <a href="{{ path('app_economia_index') }}">
+                    <a href="{{ path('app_almacen_index') }}">
                         <h4 class="navCartel">                              
                     Almacen
                     </h4>
@@ -18,91 +17,45 @@
         </nav>
     
     </nav>{% endblock %}
+{% block body %}
+    <br>
+    <div class="cardCenter row mx-auto">
+        <div class="col-sm-8 mb-3 mb-sm-0">
+            <div class="shadow p-0 mb-5 bg-body rounded">
 
-    {% block body %}
-        <br>
-           
-        <br>
-                <div class="cardCenter row mx-auto">
-                    <div class="col-sm-8 mb-3 mb-sm-0">
-                        <div class="shadow p-0 mb-5 bg-body rounded">
-                            <section class="container">
-                                <form class="form-inline" name="test" method="POST" action="{{ path('app_economia_filter') }}">
-                                <div class="row justify-content-center">
-                                    <div class="col-md-10">
-                                        <div class="row g-3">
-                                            <div class="col-sm-5">
-                                                <input type="text" class="form-control" id="idorden" name="test" placeholder="ID Orden"></div>
-                                                <div class="col-sm">
-                                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </form>
-                                </section>
-                                <br>
-                            <div class="card">
-                                <div class="card-body">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Id Almacen
-                                                                                        
-                                                </th>
-                                                <th>
-                                                    Nombre
-                                                                                        
-                                                </th>
-                                                <th>
-                                                   Direccion
-                                                                                        
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for alm in almacen %}
-                                                <tr>
-                                                    <td>
-                                                        {{ alm.id }}
-                                                    </td>
-                                                    <td>
-                                                        {{ alm.nombre }}
-                                                    </td>
-                                                    <td>
-                                                        {{ alm.direccion }}
-                                                    </td>
-                                                   
-                                                    <td>
-                                                       
-                                                            <img src="{{ asset('images/Lupa.png') }}" class="navIcons"></img>
-                                                    </td>
-                                                    <td>
-                                                        
-                                                            <img src="{{ asset('images/iconPayment.png') }}" class="navIcons">
-                                                        </td>
-        
-                                                    </tr>
-                                                {% else %}
-                                                    <tr>
-                                                        <td colspan="9">
-                                                            no records found
-                                                                                                        
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <a  class="btn btn-outline-primary my-2 my-sm-0" href="{{ path('app_economia_new') }}">
-                        Create new
-                                
-                    </a>
-                {% endblock %}
-
+    <table class="table">
+        <thead>
+            <tr>
+               
+                <th>Nombre</th>
+                <th>Direccion</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+        {% for almacen in almacens %}
+            <tr>
+                
+                <td>{{ almacen.nombre }}</td>
+                <td>{{ almacen.direccion }}</td>
+                <td>
+                    <a href="{{ path('app_almacen_show', {'id': almacen.id}) }}"> <img class="searchIcon" src="{{ asset('images/Lupa.png') }}"</a>
+                    <a class="m-3" href="{{ path('app_almacen_edit', {'id': almacen.id}) }}"><img class="searchIcon " src="{{ asset('images/lapiz.png') }}"</a></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+            </div>
+            </div>
+            </div>
+            <a  class="btn btn-outline-primary my-2 my-sm-0 m-5" href="{{ path('app_almacen_new') }}">
+                Crear Almacen
+                        
+            </a>
+   
+{% endblock %}

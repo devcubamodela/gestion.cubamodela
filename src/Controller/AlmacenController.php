@@ -2,62 +2,80 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Economia;
-use App\Form\EconomiaType;
-use App\Repository\EconomiaRepository;
-use App\Repository\OrdersProductsRepository;
-use App\Repository\ProviderProductRepository;
-use App\Repository\ProviderRepository;
-use App\Repository\ProductsRepository;
-use App\Repository\UserRepository;
-use App\Repository\OrdersRepository;
+use App\Entity\Almacen;
+use App\Form\AlmacenType;
 use App\Repository\AlmacenRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-
-
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/web/almacen')]
-class AlmacenController extends AbstractController{
-    private $productsRepository;
-    private $keyController;
-    private $providerRepository;
-    private $providerProductRepository;
-    private $ordersRepository;
-    private $ordersProductRepository;
-    private $economiaRepository;
-    private $userRepository;
-    private $almacenRepository;
-
-    public function __construct(AlmacenRepository $almacenRepository, UserRepository $userRepository, EconomiaRepository $economiaRepository, OrdersProductsRepository $ordersProductRepository, KeyController $keyController, OrdersRepository $ordersRepository, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
-    {
-        $this->productsRepository = $productsRepository;
-        $this->keyController = $keyController;
-        $this->providerRepository = $providerRepository;
-        $this->providerProductRepository = $providerProductRepository;
-        $this->ordersRepository = $ordersRepository;
-        $this->ordersProductRepository = $ordersProductRepository;
-        $this->economiaRepository = $economiaRepository;
-        $this->userRepository = $userRepository;
-        $this->almacenRepository = $almacenRepository;
-    }
-
+class AlmacenController extends AbstractController
+{
     #[Route('/', name: 'app_almacen_index', methods: ['GET'])]
     public function index(AlmacenRepository $almacenRepository): Response
     {
-        $user = $this->userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
-        $roles = $user->getRoles();
-        if (in_array("ROLE_ALMACEN", $user->getRoles())) {
-            return $this->render('almacen/index.html.twig', [
-                'almacen' => $almacenRepository->findAll(),
-            ]);
-        } else {
+        return $this->render('almacen/index.html.twig', [
+            'almacens' => $almacenRepository->findAll(),
+        ]);
+    }
 
-            return $this->render('error/index.html.twig');
+    #[Route('/new', name: 'app_almacen_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $almacen = new Almacen();
+        $form = $this->createForm(AlmacenType::class, $almacen);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($almacen);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_almacen_index', [], Response::HTTP_SEE_OTHER);
         }
+
+        return $this->render('almacen/new.html.twig', [
+            'almacen' => $almacen,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_almacen_show', methods: ['GET'])]
+    public function show(Almacen $almacen): Response
+    {
+        return $this->render('almacen/show.html.twig', [
+            'almacen' => $almacen,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_almacen_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Almacen $almacen, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(AlmacenType::class, $almacen);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_almacen_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('almacen/edit.html.twig', [
+            'almacen' => $almacen,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_almacen_delete', methods: ['POST'])]
+    public function delete(Request $request, Almacen $almacen, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$almacen->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($almacen);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_almacen_index', [], Response::HTTP_SEE_OTHER);
     }
 }

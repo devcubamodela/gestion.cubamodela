@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+    {% block header %}
+
+        <nav class="navbar bg-body-tertiary navEspecial">
+            <div class="container-fluid">
+                
+                    <a href="{{ path('app_almacen_index') }}">
+                        <h4 class="navCartel">                              
+                    Almacen
+                    </h4>
+                    </a>             
+            </div>
+    
+        </nav>
+    
+    </nav>{% endblock %}
+
+{% block body %}
+   
+
+    {{ include('almacen/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <div class="d-flex align-content-center m-5">
+        <a class="btn btn-outline-primary " href="{{ path('app_almacen_index') }}">Atras</a>
+
+        {{ include('almacen/_delete_form.html.twig') }}
+    </div>
+
+   
+{% endblock %}

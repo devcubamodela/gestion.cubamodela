@@ -1,0 +1,38 @@
+{{ form_start(form) }}
+<div class="cardCenter row mx-auto mt-5">
+    <div class="col-sm-8 mb-3 mb-sm-0">
+        <div class="shadow p-0 mb-5 bg-body rounded">
+    
+    <section class="container">
+					<div class="row justify-content-center ">
+						<div class="col-md-10">
+							<div class="row g-6 mt-3">
+								<div class="col-sm">
+									{{  form_label(form.nombre, 'Nombre')}}
+									{{ form_widget(form.nombre, {attr:{'placeholder':'Nombre'}}) }}
+
+								</div>
+								<div class="col-sm">
+									{{  form_label(form.direccion, 'Direccion')}}
+									{{ form_widget(form.direccion, {attr:{'placeholder':'Direccion'}}) }}
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+				</section>
+                {{ form_widget(form) }}
+                <div class="mt-5">
+                    <button class="btn btn-outline-primary my-2 my-sm-0 m-5">{{ button_label|default('Guardar Almacen') }}</button>
+                </div>
+				<div class="m-3">
+					<br>
+							</div>
+        </div>
+		
+		</div></div>
+	
+{{ form_end(form) }}

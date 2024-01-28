@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+    {% block header %}
+
+        <nav class="navbar bg-body-tertiary navEspecial">
+            <div class="container-fluid">
+                
+                    <a href="{{ path('app_almacen_index') }}">
+                        <h4 class="navCartel">                              
+                    Nuevo Vale
+                    </h4>
+                    </a>             
+            </div>
+    
+        </nav>
+    
+    </nav>{% endblock %}
+
+{% block body %}
+
+    {{ include('vale/_form.html.twig') }}
+
+    <a href="{{ path('app_vale_index') }}">back to list</a>
+{% endblock %}

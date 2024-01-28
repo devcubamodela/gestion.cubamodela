@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vale index{% endblock %}
+
+{% block body %}
+    <div class="cardCenter row mx-auto">
+        <div class="col-sm-8 mb-3 mb-sm-0">
+            <div class="shadow p-0 mb-5 bg-body rounded">
+
+    <table class="table">
+        <thead>
+            <tr>
+               
+                <th>Sku</th>
+                <th>Cantidad</th>
+                <th>Unidad de Medida</th>
+                <th>Almacen</th>
+                
+                <th>Tipo</th>
+                <th>Recepcionado/Despachado</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vale in vales %}
+            <tr>
+                
+                <td>{{ vale.idProducto }}</td>
+                <td>{{ vale.cantidad }}</td>
+                <td>{{ vale.unidadMedida }}</td>
+                <td>{{ vale.idAlmacen }}</td>
+                <td>{{ vale.tipo }}</td>
+                <td>{{ vale.recpDesp }}</td>
+                <td>
+                    <a href="{{ path('app_vale_show', {'id': vale.id}) }}">show</a>
+                    <a href="{{ path('app_vale_edit', {'id': vale.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+            </div></div></div>
+    <a href="{{ path('app_vale_new') }}">Create new</a>
+{% endblock %}

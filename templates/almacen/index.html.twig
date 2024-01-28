@@ -29,7 +29,9 @@
                
                 <th>Nombre</th>
                 <th>Direccion</th>
-              
+                <th>Acciones</th>
+                <th>Entrada</th>
+                <th>Salida</th>
             </tr>
         </thead>
         <tbody>
@@ -41,6 +43,12 @@
                 <td>
                     <a href="{{ path('app_almacen_show', {'id': almacen.id}) }}"> <img class="searchIcon" src="{{ asset('images/Lupa.png') }}"</a>
                     <a class="m-3" href="{{ path('app_almacen_edit', {'id': almacen.id}) }}"><img class="searchIcon " src="{{ asset('images/lapiz.png') }}"</a></a>
+                </td>
+                <td>
+                    <a href="{{ path('app_vale_new_in', {'id': almacen.id}) }}"> <img class="searchIcon " src="{{ asset('images/Abajo.svg') }}"</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_vale_new_out', {'id': almacen.id}) }}"> <img class="searchIcon" src="{{ asset('images/Arriba_Gris.svg') }}"</a>
                 </td>
             </tr>
         {% else %}

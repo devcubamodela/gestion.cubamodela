@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Vale{% endblock %}
+
+{% block body %}
+    <h1>Edit Vale</h1>
+
+    {{ include('vale/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_vale_index') }}">back to list</a>
+
+    {{ include('vale/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vale{% endblock %}
+
+{% block body %}
+    <h1>Vale</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vale.id }}</td>
+            </tr>
+            <tr>
+                <th>IdProducto</th>
+                <td>{{ vale.idProducto }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ vale.cantidad }}</td>
+            </tr>
+            <tr>
+                <th>UnidadMedida</th>
+                <td>{{ vale.unidadMedida }}</td>
+            </tr>
+            <tr>
+                <th>IdAlmacen</th>
+                <td>{{ vale.idAlmacen }}</td>
+            </tr>
+            <tr>
+                <th>RecpDesp</th>
+                <td>{{ vale.recpDesp }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vale_index') }}">back to list</a>
+
+    <a href="{{ path('app_vale_edit', {'id': vale.id}) }}">edit</a>
+
+    {{ include('vale/_delete_form.html.twig') }}
+{% endblock %}

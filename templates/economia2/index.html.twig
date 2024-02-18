@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Provider
+    
+    
+    
+{% endblock %}
+
+{% block header %}
+    <script>
+		$(document).ready(function () {
+$('#example').DataTable({
+"order": [
+[1, "des"]
+],
+"language": {
+"lengthMenu": "Mostrar _MENU_ registros por pagina",
+"info": "Mostrando pagina _PAGE_ de _PAGES_",
+"infoEmpty": "No hay registros disponibles",
+"infoFiltered": "(filtrada de _MAX_ registros)",
+"loadingRecords": "Cargando...",
+"processing": "Procesando...",
+"search": "Buscar:",
+"zeroRecords": "No se encontraron registros coincidentes",
+"paginate": {
+"next": "Siguiente",
+"previous": "Anterior"
+}
+}
+});
+});
+	</script>
+    <nav class="navbar bg-body-tertiary navEspecial">
+        <div class="container-fluid">
+
+            <a href="{{ path('app_economia_index') }}">
+                <h4 class="navCartel">
+                    Economia
+                    
+                    				
+                </h4>
+            </a>
+
+        </div>
+
+    </nav>
+
+</nav>{% endblock %}{% block body %}
+
+<br>
+
+    <br>
+        <div class="cardCenter row mx-auto">
+            <div class="col-sm-8 mb-3 mb-sm-0">
+                <div class="shadow p-0 mb-5 bg-body rounded">
+
+                    <br>
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <table id="example" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Nombre
+                                                
+                                                
+                                                								
+                                            </th>
+                                            <th>
+                                                Fecha
+                                                
+                                                
+                                                								
+                                            </th>
+                                            <th>
+                                                Pagado
+                                                
+                                                
+                                                								
+                                            </th>
+                                            <th>
+                                                Costo
+                                                
+                                                
+                                                								
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for eco in economias %}
+                                            <tr>
+                                                <td>
+                                                    {{ eco.nombre }}
+                                                </td>
+                                                <td>
+                                                    {{ eco.fecha }}
+                                                </td>
+                                                <td>
+                                                    {{ eco.pagado }}
+                                                </td>
+                                                <td>
+                                                    {{ eco.costo }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <a class="btn btn-outline-primary my-2 my-sm-0" href="{{ path('app_economia_new') }}">
+                Create new
+                
+                
+                
+            </a>
+        {% endblock %}
+        

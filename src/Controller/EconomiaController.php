@@ -12,11 +12,13 @@ use App\Repository\ProductsRepository;
 use App\Repository\UserRepository;
 use App\Repository\OrdersRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Util\Json;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/web/economia')]
 class EconomiaController extends AbstractController
@@ -29,6 +31,7 @@ class EconomiaController extends AbstractController
     private $ordersProductRepository;
     private $economiaRepository;
     private $userRepository;
+    
 
     public function __construct(UserRepository $userRepository, EconomiaRepository $economiaRepository, OrdersProductsRepository $ordersProductRepository, KeyController $keyController, OrdersRepository $ordersRepository, ProviderProductRepository $providerProductRepository, ProviderRepository $providerRepository, ProductsRepository $productsRepository)
     {
@@ -61,20 +64,67 @@ class EconomiaController extends AbstractController
     #[Route('/', name: 'app_economia_index', methods: ['GET'])]
     public function index(EconomiaRepository $economiaRepository): Response
     {
-        
+       
         $user = $this->userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $roles = $user->getRoles();
-        if (in_array("ROLE_ECONOMIA", $user->getRoles())) {
-            return $this->render('economia/index.html.twig', [
-                'economias' => $economiaRepository->findAll(),
+        $elementos = $economiaRepository->findAll();
+        $arrayNoOrdenado=$this->customGroupByMonth($elementos);
+       // $arrayToOutput= $this->groupData($this->customGroupByMonth($elementos));
+            
+        // if (in_array("ROLE_ECONOMIA", $user->getRoles())) {
+            return $this->render('economia2/index.html.twig', [
+                'economias' =>$arrayNoOrdenado ,
             ]);
-        } else {
+        // } else {
 
-            return $this->render('error/index.html.twig');
-        }
+        //     return $this->render('error/index.html.twig');
+        // }
     }
 
+    public function groupData($array){
+        $groups = [];
+        foreach ($array as $item) {
+          $keyVal = $item["fecha"];
+          if (!isset($groups[$keyVal])) {
+            $groups[$keyVal] = [];
+          }
+          $groups[$keyVal][] = $item;
+        }
+return $groups;
+    }
 
+    public function customGroupByMonth($elementos)
+    {
+        $arrayOut = [];
+        foreach ($elementos as $element) {
+            $productoName = $this->productsRepository->findOneBy(['idProduct' => $element->getIdProducto()]);
+            $dateSold = $this->ordersRepository->findOneBy(['orderId' => $element->getIdOrden()]);
+            if ($productoName != null && $dateSold != null) {
+                $month = $dateSold->getDateCreated()->format('m');
+                $year = $dateSold->getDateCreated()->format('Y');
+                $date = $month . "/" . $year;
+                $pagado = $element->isPagado();
+                $elementsOut = [
+                   "nombre"=> $productoName->getName(),
+                    "fecha"=> $date,
+                      "pagado"=>$pagado,
+                      "costo"=>""
+                ];
+                $providerProduct = $this->providerProductRepository->findOneBy(['id_product' => $element->getIdProducto()]);
+                if ($providerProduct != null) {
+                    $cost = $providerProduct->getCost();
+                    $elementsOut = [
+                        "nombre"=> $productoName->getName(),
+                    "fecha"=> $date,
+                      "pagado"=>$pagado,
+                      "costo"=> $cost
+                    ];
+                }
+                array_push($arrayOut, $elementsOut);
+            }
+        }
+        return $arrayOut;
+    }
 
     #[Route('/new', name: 'app_economia_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

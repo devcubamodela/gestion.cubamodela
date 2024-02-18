@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_economia_delete', {'id': economium.id}) }}" onsubmit="return confirm('Esta seguroq ue desea eliminar este elento?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ economium.id) }}">
+    <button class="btn">Delete</button>
+</form>

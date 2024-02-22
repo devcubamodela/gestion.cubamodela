@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+   
+    
+    {% block header %}
+        <script>
+            $(document).ready(function () {
+    $("#"+{{ idPos }}).DataTable({
+    "order": [
+    [1, "des"]
+    ],
+    "language": {
+    "lengthMenu": "Mostrar _MENU_ registros por pagina",
+    "info": "Mostrando pagina _PAGE_ de _PAGES_",
+    "infoEmpty": "No hay registros disponibles",
+    "infoFiltered": "(filtrada de _MAX_ registros)",
+    "loadingRecords": "Cargando...",
+    "processing": "Procesando...",
+    "search": "Buscar:",
+    "zeroRecords": "No se encontraron registros coincidentes",
+    "paginate": {
+    "next": "Siguiente",
+    "previous": "Anterior"
+    }
+    }
+    });
+    });
+        </script>
+     
+    
+    {% endblock %}{% block body %}
+    
+    
+           
+                                    <table id={{ idPos }} class="table">
+                                        <thead>
+                                            <tr>
+                                                <th> Nombre</th>
+                                                <th>Fecha</th>
+                                                <th>Pagado</th>
+                                                <th>Costo</th>
+                                                 </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for fac in eco %}
+                                                <tr>
+                                                    
+                                                    <td>{{ fac.idProducto }}</td>
+                                                    <td>{{ fac.fechaPagado }}</td>
+                                                    <td>
+                                                        {% if  fac.fechaPagado == false %}
+                                                            <img src="{{ asset('images/deny.png') }}" class="navIcons"></img>
+                                                        {% endif %}
+                                                        {% if  fac.fechaPagado == true %}
+                                                            <img src="{{ asset('images/confirm.png') }}" class="navIcons"></img>
+                                                         {% endif %}</td>
+                                                    <td>{{ fac.cantidadPagado }}</td>
+                                                  
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                   
+                             
+    
+                <a class="btn btn-outline-primary my-2 my-sm-0" href="{{ path('app_economia_new') }}">
+                    Create new
+                    
+                    
+                    
+                </a>
+            {% endblock %}
+            

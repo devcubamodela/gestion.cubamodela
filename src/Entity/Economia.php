@@ -35,6 +35,9 @@ class Economia
     #[ORM\Column(nullable: true)]
     private ?int $cantidadPagado = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $fecha_orden_efectuada = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class Economia
     public function setCantidadPagado(int $cantidadPagado): static
     {
         $this->cantidadPagado = $cantidadPagado;
+
+        return $this;
+    }
+
+    public function getFechaOrdenEfectuada(): ?string
+    {
+        return $this->fecha_orden_efectuada;
+    }
+
+    public function setFechaOrdenEfectuada(string $fecha_orden_efectuada): static
+    {
+        $this->fecha_orden_efectuada = $fecha_orden_efectuada;
 
         return $this;
     }

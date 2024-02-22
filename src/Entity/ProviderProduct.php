@@ -79,15 +79,5 @@ class ProviderProduct
         return $this;
     }
 
-    public function getIdProvider(): ?string
-    {
-        return $this->Id_Provider;
-    }
-
-    public function setIdProvider(string $Id_Provider): static
-    {
-        $this->Id_Provider = $Id_Provider;
-
-        return $this;
-    }
+  
 }

@@ -26,14 +26,17 @@ class EconomiaRepository extends ServiceEntityRepository
     }
 
     public function RegisterOrderToPay(
-        $orderid,
-        $productid,
+        $idOrden, $idproduct,$idProvider,$cost,$pagado,$date
     ) {
 
         $orderToPay = new Economia();
         $orderToPay
-            ->setIdOrden($orderid)
-            ->setIdProducto($productid);
+            ->setIdOrden($idOrden)
+            ->setIdProducto($idproduct)
+            ->setIdProveedor($idProvider)
+            ->setCantidadPagado($cost)
+            ->setPagado($pagado)
+            ->setFechaOrdenEfectuada($date);
 
 
 

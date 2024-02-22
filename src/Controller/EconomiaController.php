@@ -45,20 +45,43 @@ class EconomiaController extends AbstractController
         $this->userRepository = $userRepository;
     }
     #[Route('/fill', name: 'app_economia_fill', methods: ['GET'])]
-    public function fillTables(): Response
+    public function fillTables(): JsonResponse
     {
+        $i=0;
         $orders = $this->ordersProductRepository->findAll();
         foreach ($orders as $order) {
 
             $idOrden = $order->getIdOrder();
             $idproduct = $order->getIdProduct();
-            $idProvider = $this->providerProductRepository->find($idproduct);
+            $idProveedorder = $this->providerProductRepository->findOneBy(['id_product' => $idproduct]);
             $exist = $this->economiaRepository->findOneBy(['idOrden' => $idOrden, 'idProducto' => $idproduct]);
+           
             if (!$exist) {
-                $this->economiaRepository->RegisterOrderToPay($idOrden, $idproduct);
+            if($idProveedorder != null){
+                $idProvider=$idProveedorder->getIdPrvider();
+                $cost = $idProveedorder->getCost();
+                $pagado = false;
             }
+            else{
+                $pagado = false;
+                $cost=0;
+                $idProvider=0;
+            }
+            $dateSold= $this->ordersRepository->findOneBy(['orderId' => $idOrden]);
+            if ($dateSold != null) {
+                $month = $dateSold->getDateCreated()->format('m');
+                $year = $dateSold->getDateCreated()->format('Y');
+                $date = $month . "/" . $year;
+            }else{
+                $date=null;
+            }
+            $this->economiaRepository->RegisterOrderToPay($idOrden, $idproduct,$idProvider,$cost,$pagado,$date );
+           }
+           
+           $i++;
         }
-        return new JsonResponse("Ok");
+        return new JsonResponse($i);
+        
     }
 
     #[Route('/', name: 'app_economia_index', methods: ['GET'])]
@@ -68,13 +91,16 @@ class EconomiaController extends AbstractController
         $user = $this->userRepository->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $roles = $user->getRoles();
         $elementos = $economiaRepository->findAll();
-        $arrayNoOrdenado=$this->customGroupByMonth($elementos);
-       // $arrayToOutput= $this->groupData($this->customGroupByMonth($elementos));
+        
+       
+       // $arrayNoOrdenado=$this->customGroupByMonth($elementos);
+        $arrayToOutput= $this->groupData($elementos);
             
         // if (in_array("ROLE_ECONOMIA", $user->getRoles())) {
             return $this->render('economia2/index.html.twig', [
-                'economias' =>$arrayNoOrdenado ,
+                'economias' =>$arrayToOutput,
             ]);
+            
         // } else {
 
         //     return $this->render('error/index.html.twig');
@@ -84,7 +110,7 @@ class EconomiaController extends AbstractController
     public function groupData($array){
         $groups = [];
         foreach ($array as $item) {
-          $keyVal = $item["fecha"];
+          $keyVal = $item->getFechaOrdenEfectuada();
           if (!isset($groups[$keyVal])) {
             $groups[$keyVal] = [];
           }
